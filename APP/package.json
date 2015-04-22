@@ -1,0 +1,23 @@
+{
+  "name": "APP",
+  "version": "1.0.0",
+  "description": "WBA 2",
+  "main": "app.js",
+  "dependencies": {
+    "chalk": "^1.0.0"
+  },
+  "devDependencies": {},
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "kA"
+  },
+  "keywords": [
+    "WBA",
+    "2"
+  ],
+  "author": "Jessica Lee Schulz, Enrico Gette, Bernhard Kelm",
+  "license": "ISC"
+}
