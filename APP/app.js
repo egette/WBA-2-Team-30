@@ -1,11 +1,16 @@
 var fs = require('fs');
 var http = require('http');
 var chalk = require("chalk");
+var obj;
+var myJSON;
+var array_sort = [];
+
 
 http.createServer(function (req, res) {
   res.writeHead(200, {'Content-Type': 'text/plain'});
   res.end('Hello World\n');
 }).listen(1337, '127.0.0.1');
+
 console.log('Server running at http://127.0.0.1:1337/');
 console.log('  ');
 console.log('  ');
@@ -14,14 +19,38 @@ fs.readFile("daten/wolkenkratzer.json", function(err, data) {
 
   if (err) throw err;
   
-  var obj = JSON.parse(data.toString()); 
+  obj = JSON.parse(data.toString()); 
+  console.log(chalk.green('Wolkenkratzer Array wurde eingelesen!'));
   
-  for (i = 0; i < obj.wolkenkratzer.length; i++) { 
-    console.log(chalk.cyan('Name: '+ obj.wolkenkratzer[i].name));
-	console.log(chalk.green('Stadt: '+ obj.wolkenkratzer[i].stadt));
-	console.log(chalk.red('Hoehe: '+ obj.wolkenkratzer[i].hoehe));
-	console.log(chalk.magenta.bgBlue('--------------------------------------'));
+  array_sort = obj.wolkenkratzer.sort();
+  console.log(chalk.green('Wolkenkratzer Array wurde sortiert!'));
+  
+  myJSON = JSON.stringify({wolkenkratzer: array_sort});
+  
+  fs.writeFile("daten/wolkenkratzer_sortiert.json", myJSON, function(err) {
+	if (err) throw err;
+	console.log(chalk.green('Wolkenkratzer Array wurde gespeichert!'));
+	console.log(chalk.bgRed(' Ausgabe der Liste: '));
 	
-   };
+		for (i = 0; i < array_sort.length; i++) { 
+		console.log(chalk.cyan('Name: '+ array_sort[i].name));
+		console.log(chalk.green('Stadt: '+ array_sort[i].stadt));
+		console.log(chalk.red('Hoehe: '+ array_sort[i].hoehe));
+		console.log(chalk.magenta.bgBlue('--------------------------------------'));
+		};
+	
+    });
+	
+	
+
  });
  
+ 	
+   
+ 
+ 	
+ 
+
+ 
+
+
