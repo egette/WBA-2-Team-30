@@ -38,7 +38,7 @@ fs.readFile("daten/wolkenkratzer.json", function(err, data) {
 		console.log(chalk.red('Hoehe: '+ array_sort[i].hoehe));
 		console.log(chalk.magenta.bgBlue('--------------------------------------'));
 		};
-	
+		process.exit(code = 0);	
     });
 	
 	
