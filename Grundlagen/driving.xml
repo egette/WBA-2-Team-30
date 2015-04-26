@@ -1,0 +1,81 @@
+<!DOCTYPE naviXML>
+<naviXML>
+<start>
+	<land>US</land>
+	<state>PA</state>
+	<zipcode>15767</zipcode>
+	<city>Punxsutawney</city>
+	<street>W Mahoning St</street>
+</start>
+
+<end>
+	<land>US</land>
+	<state>Washington, DC</state>
+	<zipcode></zipcode>
+	<city>Washington, DC</city>
+	<street>1600 Pennsylvania Ave Nw</street>
+</end>
+<time><hours>4</hours><minutes>33</minutes></time>
+<totaldistance type="miles">246.68</totaldistance>
+<route>
+
+ <step type="1">
+	<direction> NORTHWEST</direction> 
+	<distance>0.1</distance>
+	<street>PA-36 / N MAIN ST </street>
+ </step>
+ 
+ <step type="2">
+	<direction> left</direction> 
+	<distance>1.7</distance>
+	<street>LINCOLN AVE</street>
+ </step>
+ 
+ <step type="3">
+	<direction> </direction> 
+	<distance>1.7</distance>
+	<street>PA-436</street>
+ </step>
+ 
+<step type="4">
+	<direction> right</direction> 
+	<distance>27.9</distance>
+	<street>US-119 S / BUFFALO-PITTSBURGH HWY</street>
+ </step>
+ 
+ 
+5:      Merge onto US-422 E via EXIT A toward EBENSBURG.                                                27.7 miles 
+6:      Turn LEFT onto ramp.                                                                            0.1 miles 
+7:      Merge onto US-22 E / WILLIAM PENN HWY.                                                          17.1 miles 
+8:      Merge onto I-99 S / US-220 S toward BEDFORD.                                                    27.6 miles 
+9:      Take EXIT 1 toward I-70 / PENNSYLVANIA TURNPIKE / I-76 / BEDFORD.                               0.9 miles 
+10:     Turn SLIGHT RIGHT onto US-220 BR.                                                               0.2 miles 
+11:     Merge onto I-76 E / PENNSYLVANIA TURNPIKE / I-70 E toward HARRISBURG / EXITS 12-39.             16.0 miles 
+12:     Merge onto I-70 E via EXIT 161 toward US-30 / BALTIMORE / WASHINGTON D C / BREEZEWOOD.          2.1 miles 
+13:     Take the US-30 W exit.                                                                          0.1 miles 
+14:     Turn RIGHT onto I-70 / US-30 / LINCOLN HWY.                                                     0.3 miles 
+15:     Turn LEFT onto I-70 E.                                                                          75.9 miles 
+16:     Merge onto I-270 S via EXIT 53 toward WASHINGTON.                                               30.0 miles 
+17:     Take I-270 SPUR S toward I-495 S / NORTHERN VIRGINIA.                                           2.0 miles 
+18:     Merge onto CAPITAL BELTWAY / I-495 S.                                                           3.7 miles 
+19:     Take the VA-193 exit- EXIT 43-44- toward GEORGE WASHINGTON MEMORIAL PKWY / GEORGETOWN PIKE.     0.3 miles 
+20:     Merge onto GEORGE WASHINGTON MEMORIAL PKWY S via EXIT 43.                                       8.7 miles 
+21:     Take the US-29 N exit toward KEY BRIDGE / WASHINGTON.                                           0.2 miles 
+22:     Turn SLIGHT RIGHT onto N LYNN ST / US-29 N. Continue to follow US-29 N.                         0.2 miles 
+23:     Turn SLIGHT RIGHT onto ramp.                                                                    <0.1 miles 
+24:     Merge onto US-29 N / WHITEHURST FWY.                                                            0.4 miles 
+25:     Take the ramp toward ROCK CREEK PARKWAY.                                                        0.2 miles 
+26:     Merge onto POTOMAC RIVER FWY S.                                                                 0.2 miles 
+27:     Take the I-66 W / E ST exit toward JF KENNEDY CENTER.                                           <0.1 miles 
+28:     Take the E STREET exit on the LEFT.                                                             0.2 miles 
+29:     Stay STRAIGHT to go onto E ST EXPY.                                                             0.3 miles 
+30:     Stay STRAIGHT to go onto E ST NW.                                                               <0.1 miles 
+31:     Turn RIGHT onto 19TH ST NW.                                                                     0.2 miles 
+32:     Turn LEFT onto CONSTITUTION AVE NW / US-50.                                                     0.3 miles 
+33:     Turn LEFT onto 16TH ST NW.                                                                      <0.1 miles 
+34:     Turn LEFT onto ELLIPSE RD NW.                                                                   0.2 miles 
+35:     Turn SLIGHT RIGHT onto E ST NW.                                                                 <0.1 miles
+36:     End at 1600 Pennsylvania Ave Nw, Washington, DC US
+
+</route>
+</naviXML>
