@@ -22,7 +22,18 @@ fs.readFile("daten/wolkenkratzer.json", function(err, data) {
   obj = JSON.parse(data.toString()); 
   console.log(chalk.green('Wolkenkratzer Array wurde eingelesen!'));
   
-  array_sort = obj.wolkenkratzer.sort();
+  function compareNumbers(a, b) {
+   if (a.hoehe > b.hoehe) {
+    return -1;
+  }
+  if (a.hoehe < b.hoehe) {
+    return 1;
+  }
+  // a must be equal to b
+  return 0;
+  }
+  
+  array_sort = obj.wolkenkratzer.sort(compareNumbers);
   console.log(chalk.green('Wolkenkratzer Array wurde sortiert!'));
   
   myJSON = JSON.stringify({wolkenkratzer: array_sort});
@@ -38,6 +49,7 @@ fs.readFile("daten/wolkenkratzer.json", function(err, data) {
 		console.log(chalk.red('Hoehe: '+ array_sort[i].hoehe));
 		console.log(chalk.magenta.bgBlue('--------------------------------------'));
 		};
+		
 		process.exit(code = 0);	
     });
 	
