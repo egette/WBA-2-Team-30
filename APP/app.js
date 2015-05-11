@@ -52,17 +52,4 @@ fs.readFile("daten/wolkenkratzer.json", function(err, data) {
 		
 		process.exit(code = 0);	
     });
-	
-	
-
  });
- 
- 	
-   
- 
- 	
- 
-
- 
-
-
