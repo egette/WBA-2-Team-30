@@ -17,3 +17,7 @@ if ('development' == env) {
 		res.end(err.status + ' ' + err.messages);
 	});
 }
+
+app.get('/', function(req, res) {
+	res.send('Hello World!');
+});
