@@ -3,6 +3,7 @@ var http = require('http');
 var express = require('express');
 var bodyParser = require('body-parser');
 var jsonParser = bodyParser.json();
+var obj;
 
 
 var app = express();
@@ -19,5 +20,12 @@ if ('development' == env) {
 }
 
 app.get('/', function(req, res) {
-	res.send('Hello World!');
+	fs.readFile("daten/fragen.json", function(err, data) { 
+
+  		if (err) throw err;
+  
+  		obj = JSON.parse(data.toString()); 
+  	});
+
+  	res.send(obj);	
 });

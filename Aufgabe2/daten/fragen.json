@@ -1,0 +1,11 @@
+{
+   "fragen":[
+      {
+         "1":"Mit welchem Modul von Node kann man Farben darstellen?",
+         "a":"Paint",
+         "b":"Draw",
+         "c":"Chalk",
+         "d":"Brush"
+      }
+   ]
+}
