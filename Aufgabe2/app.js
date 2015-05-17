@@ -6,7 +6,7 @@ var jsonParser = bodyParser.json();
 var obj;
 var obj2;
 var answer = [
-	{"question": "answer"}
+	{question: "answer"}
 ]
 
 
@@ -35,7 +35,11 @@ app.get('/', function(req, res) {
 });
 
 
-app.post('/', jsonParser, function(req, res) {
+app.post('/answer', jsonParser, function(req, res) {
 	answer.push(req.body);
-	res.type('plain').send('Added!');
+	res.type('plain').send('Added!').end();
+});
+
+app.get('/answer', function(req, res) {
+	res.status(200).json(answer);
 });
