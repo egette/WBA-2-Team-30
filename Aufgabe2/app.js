@@ -4,6 +4,10 @@ var express = require('express');
 var bodyParser = require('body-parser');
 var jsonParser = bodyParser.json();
 var obj;
+var obj2;
+var answer = [
+	{"question": "answer"}
+]
 
 
 var app = express();
@@ -28,4 +32,10 @@ app.get('/', function(req, res) {
   	});
 
   	res.send(obj);	
+});
+
+
+app.post('/', jsonParser, function(req, res) {
+	answer.push(req.body);
+	res.type('plain').send('Added!');
 });
