@@ -31,7 +31,7 @@ app.get('/', function(req, res) {
   		obj = JSON.parse(data.toString()); 
   	});
 
-  	res.send(obj);	
+  	res.send(obj).status(200);	
 });
 
 
