@@ -2,14 +2,17 @@ var fs = require('fs');
 var http = require('http');
 var express = require('express');
 var bodyParser = require('body-parser');
+var redis = require('redis');
+var client = redis.createClient();
 var jsonParser = bodyParser.json();
 var obj;
 var obj2;
-var answer = [
-	{question: "answer"}
+var test;
+var user = [
+	{a: "b"}
 ]
 
-
+//Starting node Server on localhost:3000
 var app = express();
 app.listen(3000);
 
@@ -23,7 +26,29 @@ if ('development' == env) {
 	});
 }
 
-app.get('/', function(req, res) {
+//Connecting to redis Server
+client.on('connect', function() {
+    console.log('connected to redis');
+});
+
+client.on("error", function (err) {
+    console.log("Error " + err);
+});
+
+
+//Creating User
+app.post('/user', jsonParser, function(req, res) {
+	var username = req.body.user;
+	client.set('user', username, redis.print);
+	res.type('plain').send('Added a new User').end();
+});
+
+app.get('/user', function(req, res) {
+	res.status(200).json(user);
+});
+
+
+/*app.get('/', function(req, res) {
 	fs.readFile("daten/fragen.json", function(err, data) { 
 
   		if (err) throw err;
@@ -42,4 +67,4 @@ app.post('/answer', jsonParser, function(req, res) {
 
 app.get('/answer', function(req, res) {
 	res.status(200).json(answer);
-});
+});*/
