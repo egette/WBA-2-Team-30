@@ -40,16 +40,13 @@ app.post('/user', jsonParser, function(req, res) {
 	var password = req.body.password;
 	var name = req.body.name;
 	var surname = req.body.surname;
-	console.log(req.body.username);
-	//client.set('user', username, redis.print);
 	client.hset('user', 'username', username, redis.print);
 	client.hset('user', 'password', password, redis.print);
+	client.hset('user', 'name', name, redis.print);
+	client.hset('user', 'surname', surname, redis.print);
 	res.type('plain').send('Added a new User').end();
 });
 
-app.get('/user', function(req, res) {
-	res.status(200).json(user);
-});
 
 
 /*app.get('/', function(req, res) {
