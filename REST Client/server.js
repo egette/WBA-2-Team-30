@@ -79,7 +79,7 @@ app.delete('/user/:id', function(req, res) {
 	});
 });
 
-//Total number of Users
+//Get all users
 app.get('/user', function(req, res) {
 	db.keys('user:*', function(err, rep) {
 		var user = [];
@@ -100,6 +100,78 @@ app.get('/user', function(req, res) {
 		});
 	});
 });
+
+
+//Creating a Question with ID as string
+app.post('/question', function(req, res) {
+	var newQuestion = req.body;
+	db.incr('id:question', function(err, rep) {
+		newQuestion.id = rep;
+		db.set('question:'+newQuestion.id, JSON.stringify(newQuestion), function(err, rep) {
+			res.json(newQuestion);
+		});
+	});
+});
+
+//Getting Question by ID
+app.get('/question/:id', function(req, res) {
+	db.get('question:'+req.params.id, function(err, rep) {
+		if(rep) {
+			res.type('json').send(rep);
+		} else {
+			res.status(404).type('text').send('Diese Frage ist nicht vorhanden')
+		}
+	});
+});
+
+//Updating information of a Question
+app.put('/question/:id', function(req, res) {
+	db.exists('question:'+req.params.id, function(err, rep) {
+		if(rep == 1) {
+			var updatedQuestion = req.body;
+			updatedQuestion.id = req.params.id;
+			db.set('question:' + req.params.id, JSON.stringify(updatedQuestion), function(err, rep) {
+				res.json(updatedQuestion);
+			});
+		} else {
+			res.status(404).type('text').send('Diese Frage ist nicht vorhanden');
+		}
+	});
+});
+
+//Delete Question
+app.delete('/question/:id', function(req, res) {
+	db.del('question:'+req.params.id, function(err, rep) {
+		if(rep == 1) {
+			res.status(200).type('text').send('Die Frage wurde gelöscht');
+		} else {
+			res.status(404).type('text').send('Diese Frage ist nicht vorhanden');
+		}
+	});
+});
+
+//Get all questions
+app.get('/question', function(req, res) {
+	db.keys('question:*', function(err, rep) {
+		var question = [];
+
+		if(rep.length == 0) {
+			res.json(question);
+			return;
+		}
+		db.mget(rep, function(err, rep) {
+			rep.forEach(function(val) {
+				question.push(JSON.parse(val));
+		});
+
+		question = question.map(function(user) {
+			return {id: question.id, answer: question.answer};
+		});
+		res.json(question);
+		});
+	});
+});
+
 
 //Starting node Server on localhost:3000
 app.listen(3000);
