@@ -43,6 +43,15 @@ app.post('/user', jsonParser, function(req, res) {
 	id++;
 });
 
+//Getting a user
+app.get('/user', function(req, res) {
+	client.hget("user:1", "name", function (err, reply) {
+		res.send(reply.toString()).status(200);
+		client.end();
+		res.end();
+	});
+});
+
 
 //Old Code from Exercise 2
 /*app.get('/', function(req, res) {
