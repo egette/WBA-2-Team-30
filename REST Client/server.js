@@ -68,6 +68,39 @@ app.put('/user/:id', function(req, res) {
 	});
 });
 
+//Delete User
+app.delete('/user/:id', function(req, res) {
+	db.del('user:'+req.params.id, function(err, rep) {
+		if(rep == 1) {
+			res.status(200).type('text').send('Der User wurde gelöscht');
+		} else {
+			res.status(404).type('text').send('Dieser User ist nicht vorhanden');
+		}
+	});
+});
+
+//Total number of Users
+app.get('/user', function(req, res) {
+	db.keys('user:*', function(err, rep) {
+		var user = [];
+
+		if(rep.length == 0) {
+			res.json(user);
+			return;
+		}
+		db.mget(rep, function(err, rep) {
+			rep.forEach(function(val) {
+				user.push(JSON.parse(val));
+		});
+
+		user = user.map(function(user) {
+			return {id: user.id, name: user.name};
+		});
+		res.json(user);
+		});
+	});
+});
+
 //Starting node Server on localhost:3000
 app.listen(3000);
 
