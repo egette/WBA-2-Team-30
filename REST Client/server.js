@@ -6,9 +6,7 @@ var jsonParser = bodyParser.json();
 var redis = require('redis');
 var client = redis.createClient();
 
-var user = [
-	{a: "b"}
-]
+var id = 1;
 
 //Starting node Server on localhost:3000
 var app = express();
@@ -40,15 +38,13 @@ app.post('/user', jsonParser, function(req, res) {
 	var password = req.body.password;
 	var name = req.body.name;
 	var surname = req.body.surname;
-	client.hset('user', 'username', username, redis.print);
-	client.hset('user', 'password', password, redis.print);
-	client.hset('user', 'name', name, redis.print);
-	client.hset('user', 'surname', surname, redis.print);
+	client.hmset('user:'+id, 'username', username, 'password', password, 'name', name, 'surname', surname, redis.print);
 	res.type('plain').send('Added a new User').end();
+	id++;
 });
 
 
-
+//Old Code from Exercise 2
 /*app.get('/', function(req, res) {
 	fs.readFile("daten/fragen.json", function(err, data) { 
 
