@@ -2,12 +2,10 @@ var fs = require('fs');
 var http = require('http');
 var express = require('express');
 var bodyParser = require('body-parser');
+var jsonParser = bodyParser.json();
 var redis = require('redis');
 var client = redis.createClient();
-var jsonParser = bodyParser.json();
-var obj;
-var obj2;
-var test;
+
 var user = [
 	{a: "b"}
 ]
@@ -38,8 +36,14 @@ client.on("error", function (err) {
 
 //Creating User
 app.post('/user', jsonParser, function(req, res) {
-	var username = req.body.user;
-	client.set('user', username, redis.print);
+	var username = req.body.username;
+	var password = req.body.password;
+	var name = req.body.name;
+	var surname = req.body.surname;
+	console.log(req.body.username);
+	//client.set('user', username, redis.print);
+	client.hset('user', 'username', username, redis.print);
+	client.hset('user', 'password', password, redis.print);
 	res.type('plain').send('Added a new User').end();
 });
 
