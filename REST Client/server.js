@@ -164,7 +164,7 @@ app.get('/question', function(req, res) {
 				question.push(JSON.parse(val));
 		});
 
-		question = question.map(function(user) {
+		question = question.map(function(question) {
 			return {id: question.id, answer: question.answer};
 		});
 		res.json(question);
