@@ -1,4 +1,4 @@
-var fs = require('fs');
+
 var http = require('http');
 var express = require('express');
 var bodyParser = require('body-parser');
@@ -31,7 +31,7 @@ db.on("error", function (err) {
 
 
 
-//Creating a user with ID as string
+//Creating a user with ID as JSON string
 app.post('/user', function(req, res) {
 	var newUser = req.body;
 	db.incr('id:user', function(err, rep) {
