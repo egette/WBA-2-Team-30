@@ -7,6 +7,17 @@ var fs = require('fs');
 
 var app = express();
 
+var env = process.env.NODE_ENV || 'development';
+if ('development' == env) {
+   app.use(express.static(__dirname + '/public'));
+
+	app.use(function(err, req, res, next) {
+		console.error(err.stack);
+		res.end(err.status + ' ' + err.messages);
+	});
+}
+
+
 app.get('/question', jsonParser, function(req, res) {
 
 	fs.readFile('./quiz.ejs', {encoding: 'utf-8'}, function(err, filestring) {
@@ -37,6 +48,7 @@ app.get('/question', jsonParser, function(req, res) {
 					res.end();
 				});
 			});
+			console.log('Request end');
 			externalRequest.end();
 		}
 	}); 

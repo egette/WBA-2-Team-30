@@ -8,7 +8,6 @@ var app = express();
 
 app.use(bodyParser.json());
 
-
 var env = process.env.NODE_ENV || 'development';
 if ('development' == env) {
    app.use(express.static(__dirname + '/public'));
