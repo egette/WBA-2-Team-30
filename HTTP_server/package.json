@@ -1,0 +1,18 @@
+{
+  "name": "studiquiz_dienstnutzer",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "body-parser": "^1.13.1",
+    "ejs": "^2.3.1",
+    "express": "^4.13.0",
+    "fs": "0.0.2",
+    "node": "0.0.0"
+  }
+}

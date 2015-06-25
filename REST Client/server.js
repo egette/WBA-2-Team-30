@@ -1,4 +1,3 @@
-
 var http = require('http');
 var express = require('express');
 var bodyParser = require('body-parser');
@@ -165,7 +164,7 @@ app.get('/question', function(req, res) {
 		});
 
 		question = question.map(function(question) {
-			return {id: question.id, answer: question.answer};
+			return {id: question.id, answer: question.answer, fach: question.fach};
 		});
 		res.json(question);
 		});
