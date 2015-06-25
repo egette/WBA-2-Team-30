@@ -28,15 +28,12 @@ app.get('/question', jsonParser, function(req, res) {
 				console.log('Connected');
 				externalResponse.on('question', function(chunk) {
 					console.log('1');
-					var questiondata = JSON.parse(chunk);
-					var html = ejs.render(filestring, questiondata);
-					console.log('2');
+					var data = JSON.parse(chunk);
+					var html = ejs.render(filestring, data);
 
 					res.setHeader('content-type', 'text/html');
-					console.log('3');
 					res.writeHead(200);
-					console.log('4');
-					red.write(html);
+					res.write(html);
 					res.end();
 				});
 			});

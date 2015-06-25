@@ -28,6 +28,7 @@ db.on("error", function (err) {
     console.log("Error " + err);
 });
 
+//Send server log with time stamp
 app.use(function (req, res, next) {
 	console.log('Time: %d ' + ' Request-Pfad: ' + req.path, Date.now());
 	next();
@@ -170,6 +171,7 @@ app.get('/question', function(req, res) {
 			return {id: question.id, answer: question.answer, fach: question.fach};
 		});
 		res.json(question);
+		console.log(question);
 		});
 	});
 });
