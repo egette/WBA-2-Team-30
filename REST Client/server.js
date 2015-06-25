@@ -28,7 +28,10 @@ db.on("error", function (err) {
     console.log("Error " + err);
 });
 
-
+app.use(function (req, res, next) {
+	console.log('Time: %d ' + ' Request-Pfad: ' + req.path, Date.now());
+	next();
+});
 
 //Creating a user with ID as JSON string
 app.post('/user', function(req, res) {
