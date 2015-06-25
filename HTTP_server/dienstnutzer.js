@@ -37,10 +37,10 @@ app.get('/question', jsonParser, function(req, res) {
 
 			var externalRequest = http.request(options, function(externalResponse) {
 				console.log('Connected');
-				externalResponse.on('question', function(chunk) {
+				externalResponse.on('data', function(chunk) {
 					console.log('1');
-					var data = JSON.parse(chunk);
-					var html = ejs.render(filestring, data);
+					var adata = JSON.parse(chunk);
+					var html = ejs.render(filestring, adata);
 
 					res.setHeader('content-type', 'text/html');
 					res.writeHead(200);
