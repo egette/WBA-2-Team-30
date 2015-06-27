@@ -79,6 +79,11 @@ app.post('/question', jsonParser, function(req, res) {
 	console.log(newquestion);
 });
 
+app.post('/statistics', jsonParser, function(req, res) {
+	var statistics = req.body;
+	console.log(statistics);
+});
+
 app.listen(3001, function() {
 	console.log("Server listens on Port 3001");
 });

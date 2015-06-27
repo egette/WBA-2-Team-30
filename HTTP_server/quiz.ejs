@@ -2,6 +2,7 @@
 	<head>
 		<title>Quiz</title>
 		<meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+		<script src="http://code.jquery.com/jquery-latest.js"></script>
 	</head>
 	<body>
 		<h1>Quiz</h1>
@@ -12,5 +13,52 @@
 				}
 				%>
 		</ul>
+		<h2>Die Frage</h2>
+		<form id="quiz">
+			<fieldset>
+				<%= questions[1].question %> <br>
+				<label for="a">Antwort 1: <%= questions[1].a%></label> 
+				<input type="radio" id="a" value="a" name="Quiz"><br>
+				<label for="b">Antwort 2: <%= questions[1].b%></label>  
+				<input type="radio" id="b" value="b" name="Quiz"><br>
+				<label for="c">Antwort 3: <%= questions[1].c%></label>  
+				<input type="radio" id="c" value="c" name="Quiz"><br>
+				<label for="d">Antwort 4: <%= questions[1].d%></label>  
+				<input type="radio" id="d" value="d" name="Quiz"><br>
+			</fieldset>
+			<button type="submit">Eingaben absenden</button>
+		</form>
+		<script type="text/javascript">
+			$(document).ready(function(){
+				var frm = $('#quiz');
+				frm.submit(function (ev) {
+					alert('Ihre Anfrage wird verarbeitet');
+					
+					var gewaehlte_antwort = $('input[name=Quiz]:checked', '#quiz').val();
+					alert(gewaehlte_antwort);
+					var richtig = 0; 
+					if (questions[1].answer == gewaehlte_antwort) richtig = 1;
+					
+					var data = {
+						"id" : questions[1].id,
+						"richtig" : richtig
+					};
+					
+					$.ajax({
+						type: 'POST',
+						url: '/statistics',
+						data: JSON.stringify(data),
+						contentType: 'application/json'
+						}).done(function(){
+						alert('Daten wurden uebermittelt.');
+						}).fail(function(e){
+						alert('Daten konnten nicht uebermittelt werden.');
+						});
+						
+				ev.preventDefault();
+				});
+				alert('Seite geladen');
+			});
+		</script>
 	</body>
 </html>

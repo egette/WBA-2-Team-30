@@ -167,7 +167,7 @@ app.get('/question', function(req, res) {
 		});
 
 		question = question.map(function(question) {
-			return {id: question.id, answer: question.answer, fach: question.fach};
+			return {id: question.id, answer: question.answer, fach: question.fach, question: question.question, a: question.a, b: question.b, c: question.c, d: question.d};
 		}); 
 		var data = {questions: question};
 		
