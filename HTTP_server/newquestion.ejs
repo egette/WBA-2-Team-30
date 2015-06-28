@@ -3,7 +3,10 @@
 		<title>Quiz</title>
 		<meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
 		<script src="http://code.jquery.com/jquery-latest.js"></script>
+<<<<<<< Updated upstream
 		
+=======
+>>>>>>> Stashed changes
 	</head>
 	<body>
 		<h1>Neue Frage erstellen</h1>
@@ -27,6 +30,7 @@
         <button type="submit">Eingaben absenden</button>
 
         </form>
+<<<<<<< Updated upstream
 			<script type="text/javascript">
 			$(document).ready(function(){
 						var frm = $('#newquestion');
@@ -51,6 +55,30 @@
 								"fach": fach
 							};
 							
+=======
+	</body>
+		<script type="text/javascript">
+			$(document).ready(function(){
+						var frm = $('#newquestion');
+						var question = ($('#frage').val());
+						var a = ($('#antwort1').val());
+						var b = ($('#antwort2').val());
+						var c = ($('#antwort3').val());
+						var d = ($('#antwort4').val());
+						var answer = "a";
+						var fach = "WBA";
+						var data = { 
+						question : question,
+						a : a,
+						b : b,
+						c : c,
+						d : d,
+						"answer": answer,
+						"fach": fach
+						};
+						frm.submit(function (ev) {
+						alert('Ihre Anfrage wird verarbeitet');
+>>>>>>> Stashed changes
 							$.ajax({
 								type: 'POST',
 								url: '/question',
@@ -67,5 +95,8 @@
 				alert('Seite geladen');
 			});
 		</script>
+<<<<<<< Updated upstream
 	</body>
+=======
+>>>>>>> Stashed changes
 </html>
