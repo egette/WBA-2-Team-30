@@ -3,10 +3,6 @@
 		<title>Quiz</title>
 		<meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
 		<script src="http://code.jquery.com/jquery-latest.js"></script>
-<<<<<<< Updated upstream
-		
-=======
->>>>>>> Stashed changes
 	</head>
 	<body>
 		<h1>Neue Frage erstellen</h1>
@@ -25,37 +21,18 @@
 		
 		<label for="antwort4">Geben Sie eine falsche Antwort ein:</label>  <br>
         <input type="text" id="antwort4" maxlength="5000"><br>
+
+        <select id="fach">
+    		<option>Fach auswählen</option>
+    		<option>AP1</option>
+    		<option>BS1</option>
+        	<option>ST</option>
+      	</select><br>
 			
         <button type="reset">Eingaben zuruecksetzen</button>
         <button type="submit">Eingaben absenden</button>
 
-        </form>
-<<<<<<< Updated upstream
-			<script type="text/javascript">
-			$(document).ready(function(){
-						var frm = $('#newquestion');
-						frm.submit(function (ev) {
-							alert('Ihre Anfrage wird verarbeitet');
-							
-							var question = ($('#frage').val());
-							var a = ($('#antwort1').val());
-							var b = ($('#antwort2').val());
-							var c = ($('#antwort3').val());
-							var d = ($('#antwort4').val());
-							var answer = "a";
-							var fach = "WBA";
-							
-							var data = { 
-								"question" : question,
-								"a" : a,
-								"b" : b,
-								"c" : c,
-								"d" : d,
-								"answer": answer,
-								"fach": fach
-							};
-							
-=======
+        </form>			
 	</body>
 		<script type="text/javascript">
 			$(document).ready(function(){
@@ -66,7 +43,7 @@
 						var c = ($('#antwort3').val());
 						var d = ($('#antwort4').val());
 						var answer = "a";
-						var fach = "WBA";
+						var fach = ($('#fach').val());;
 						var data = { 
 						question : question,
 						a : a,
@@ -78,7 +55,6 @@
 						};
 						frm.submit(function (ev) {
 						alert('Ihre Anfrage wird verarbeitet');
->>>>>>> Stashed changes
 							$.ajax({
 								type: 'POST',
 								url: '/question',
@@ -95,8 +71,5 @@
 				alert('Seite geladen');
 			});
 		</script>
-<<<<<<< Updated upstream
 	</body>
-=======
->>>>>>> Stashed changes
 </html>

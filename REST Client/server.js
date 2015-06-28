@@ -109,6 +109,7 @@ app.post('/question', function(req, res) {
 	var newQuestion = req.body;
 	db.incr('id:question', function(err, rep) {
 		newQuestion.id = rep;
+		console.log('res');
 		db.set('question:'+newQuestion.id, JSON.stringify(newQuestion), function(err, rep) {
 			res.json(newQuestion);
 		});
