@@ -37,13 +37,13 @@
 		<script type="text/javascript">
 			$(document).ready(function(){
 						var frm = $('#newquestion');
-						var question = ($('#frage').val());
-						var a = ($('#antwort1').val());
-						var b = ($('#antwort2').val());
-						var c = ($('#antwort3').val());
-						var d = ($('#antwort4').val());
+						var question = $('#frage').val();
+						var a = $('#antwort1').val();
+						var b = $('#antwort2').val();
+						var c = $('#antwort3').val();
+						var d = $('#antwort4').val();
 						var answer = "a";
-						var fach = ($('#fach').val());;
+						var fach = $('#fach option:selected').text();
 						var data = { 
 						question : question,
 						a : a,
@@ -57,7 +57,7 @@
 						alert('Ihre Anfrage wird verarbeitet');
 							$.ajax({
 								type: 'POST',
-								url: 'http://localhost:3000/question',
+								url: '/question',
 								data: JSON.stringify(data),
 								contentType: 'application/json'
 								}).done(function(){
@@ -65,7 +65,6 @@
 								}).fail(function(e){
 								alert('Frage konnte nicht hinzugefügt werden.');
 							});
-
 							ev.preventDefault();
 						});
 				alert('Seite geladen');
