@@ -75,10 +75,41 @@ app.get('/newquestion', jsonParser, function(req, res) {
 });
 
 
-app.post('/question', jsonParser, function(req, res) {
+/*app.post('/question', jsonParser, function(req, res) {
 	console.log('Posting on /question');
 	var newquestion = req.body;
 	console.log(newquestion);
+});*/
+
+app.post('/question', jsonParser, function(req, res) {
+
+	var newquestion = req.body;
+
+	var headers = {
+	  'Content-Type': 'application/json',
+	  'Content-Length': newquestion.length
+	};
+
+	var options = {
+	  host: 'http://localhost',
+	  port: 3000,
+	  path: '/question',
+	  method: 'POST',
+	  headers: headers
+	};
+
+	// Setup the request.  The options parameter is
+	// the object we defined above.
+	var req = http.request(options, function(res) {
+	  res.setEncoding('utf-8');
+
+	req.write(newquestion);
+	req.end();
+	});
+
+	req.on('error', function(e) {
+	  // TODO: handle error.
+	});
 });
 
 app.post('/statistics', jsonParser, function(req, res) {
