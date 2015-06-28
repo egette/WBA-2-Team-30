@@ -76,6 +76,7 @@ app.get('/newquestion', jsonParser, function(req, res) {
 
 
 app.post('/question', jsonParser, function(req, res) {
+	console.log('Posting on /question');
 	var newquestion = req.body;
 	console.log(newquestion);
 });

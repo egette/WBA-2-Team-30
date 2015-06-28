@@ -18,6 +18,25 @@ if ('development' == env) {
 	});
 }
 
+//Allowing dienstnutzer acces tp post on this server
+app.use(function (req, res, next) {
+
+    //Allowing dienstnutzer to connect to this server
+    res.setHeader('Access-Control-Allow-Origin', 'http://localhost:3001');
+
+    //Allowing all request methodes
+    res.setHeader('Access-Control-Allow-Methods', 'GET, POST, OPTIONS, PUT, PATCH, DELETE');
+
+    //Allowing all content types
+    res.setHeader('Access-Control-Allow-Headers', 'X-Requested-With,content-type');
+
+    //Allowing use of cookies and storing other data
+    res.setHeader('Access-Control-Allow-Credentials', true);
+
+    //Pass to next layer of middleware
+    next();
+});
+
 //Connecting to redis Server
 db.on('connect', function() {
     console.log('connected to redis');
@@ -107,11 +126,12 @@ app.get('/user', function(req, res) {
 //Creating a Question with ID as string
 app.post('/question', function(req, res) {
 	var newQuestion = req.body;
+	console.log('Adding new question to Database');
 	db.incr('id:question', function(err, rep) {
 		newQuestion.id = rep;
-		console.log('res');
 		db.set('question:'+newQuestion.id, JSON.stringify(newQuestion), function(err, rep) {
 			res.json(newQuestion);
+			console.log('New question added succedfully');
 		});
 	});
 });
