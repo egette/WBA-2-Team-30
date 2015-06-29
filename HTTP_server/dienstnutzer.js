@@ -18,8 +18,7 @@ if ('development' == env) {
 }
 
 //Quiz aufrufen und abfragen
-app.get('/question', jsonParser, function(req, res) {
-
+app.get('/quiz', jsonParser, function(req, res) {
 	fs.readFile('./quiz.ejs', {encoding: 'utf-8'}, function(err, filestring) {
 		if(err) {
 			throw err;
@@ -28,17 +27,17 @@ app.get('/question', jsonParser, function(req, res) {
 			var options = {
 				host: 'localhost',
 				port: 3000,
-				path: '/question',
+				path: '/quiz/wba',
 				method: 'GET',
 				headers: {
 					accept: 'application/json'
 				}
 			}
-
+			console.log(options);
+			
 			var externalRequest = http.request(options, function(externalResponse) {
 				console.log('Connected');
 				externalResponse.on('data', function(chunk) {
-					console.log('1');
 					var adata = JSON.parse(chunk);
 					var html = ejs.render(filestring, adata);
 
@@ -74,13 +73,6 @@ app.get('/newquestion', jsonParser, function(req, res) {
 	}); 
 });
 
-
-/*app.post('/question', jsonParser, function(req, res) {
-	console.log('Posting on /question');
-	var newquestion = req.body;
-	console.log(newquestion);
-});*/
-
 app.post('/question', jsonParser, function(req, res) {
 
 	var newQuestion = req.body;
@@ -97,8 +89,7 @@ app.post('/question', jsonParser, function(req, res) {
 	  method: 'POST',
 	  headers: headers
 	};
-	// Setup the request.  The options parameter is
-	// the object we defined above.
+
 	var req = http.request(options, function(res) {
 	 	res.setEncoding('utf-8');
 
@@ -110,14 +101,15 @@ app.post('/question', jsonParser, function(req, res) {
 	});
 
 	req.on('error', function(e) {
-	 	// TODO: handle error.
 	 	console.log('problem with request' + e.message);
 	});
 
 	req.write(JSON.stringify(newQuestion));
 	req.end();
+	res.end();
 });
 
+//Posting statistics (not functional as of now)
 app.post('/statistics', jsonParser, function(req, res) {
 	var statistics = req.body;
 	console.log(statistics);
