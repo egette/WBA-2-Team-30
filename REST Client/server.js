@@ -198,6 +198,36 @@ app.get('/question', function(req, res) {
 	});
 });
 
+//Getting questions by subject
+app.get('/quiz/:fach', function(req, res) {
+	db.keys('question:*', function(err, rep) {
+		var question = [];
+		var fachUp = req.params.fach.toUpperCase();
+
+		if(rep.length == 0) {
+			res.json(question);
+			return;
+		}
+		db.mget(rep, function(err, rep) {
+			rep.forEach(function(val) {
+				question.push(JSON.parse(val));
+		});
+
+		question = question.map(function(question) {
+			console.log(question.fach);
+			console.log(req.params.fach);
+			if(question.fach == fachUp) {
+				return {id: question.id};
+			}
+		}); 
+		var data = {quizID: question};
+		
+		res.json(data);
+		console.log(data);
+		});
+	});
+});
+
 
 //Starting node Server on localhost:3000
 app.listen(3000);
