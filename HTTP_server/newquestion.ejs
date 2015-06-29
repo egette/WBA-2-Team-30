@@ -37,6 +37,8 @@
 		<script type="text/javascript">
 			$(document).ready(function(){
 						var frm = $('#newquestion');
+
+						frm.submit(function (ev) {
 						var question = $('#frage').val();
 						var a = $('#antwort1').val();
 						var b = $('#antwort2').val();
@@ -53,7 +55,6 @@
 						"answer": answer,
 						"fach": fach
 						};
-						frm.submit(function (ev) {
 						alert('Ihre Anfrage wird verarbeitet');
 							$.ajax({
 								type: 'POST',
