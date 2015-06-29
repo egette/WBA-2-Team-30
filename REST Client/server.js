@@ -18,25 +18,6 @@ if ('development' == env) {
 	});
 }
 
-//Allowing dienstnutzer acces tp post on this server
-app.use(function (req, res, next) {
-
-    //Allowing dienstnutzer to connect to this server
-    res.setHeader('Access-Control-Allow-Origin', 'http://localhost:3001');
-
-    //Allowing all request methodes
-    res.setHeader('Access-Control-Allow-Methods', 'GET, POST, OPTIONS, PUT, PATCH, DELETE');
-
-    //Allowing all content types
-    res.setHeader('Access-Control-Allow-Headers', 'X-Requested-With,content-type');
-
-    //Allowing use of cookies and storing other data
-    res.setHeader('Access-Control-Allow-Credentials', true);
-
-    //Pass to next layer of middleware
-    next();
-});
-
 //Connecting to redis Server
 db.on('connect', function() {
     console.log('connected to redis');
@@ -51,6 +32,7 @@ app.use(function (req, res, next) {
 	console.log('Time: %d ' + ' Request-Pfad: ' + req.path, Date.now());
 	next();
 });
+
 
 //Creating a user with ID as JSON string
 app.post('/user', function(req, res) {
@@ -121,7 +103,6 @@ app.get('/user', function(req, res) {
 		});
 	});
 });
-
 
 //Creating a Question with ID as string
 app.post('/question', function(req, res) {

@@ -84,10 +84,10 @@ app.get('/newquestion', jsonParser, function(req, res) {
 app.post('/question', jsonParser, function(req, res) {
 
 	var newQuestion = req.body;
-
+	console.log('1');
 	var headers = {
 	  'Content-Type': 'application/json',
-	  'Content-Length': newQuestion.length
+	  //'Content-Length': newQuestion.length
 	};
 
 	var options = {
@@ -97,7 +97,6 @@ app.post('/question', jsonParser, function(req, res) {
 	  method: 'POST',
 	  headers: headers
 	};
-
 	// Setup the request.  The options parameter is
 	// the object we defined above.
 	var req = http.request(options, function(res) {
@@ -115,8 +114,8 @@ app.post('/question', jsonParser, function(req, res) {
 	 	console.log('problem with request' + e.message);
 	});
 
-	req.write(newQuestion);
-	req.end;
+	req.write(JSON.stringify(newQuestion));
+	req.end();
 });
 
 app.post('/statistics', jsonParser, function(req, res) {
