@@ -83,7 +83,7 @@ app.get('/newquestion', jsonParser, function(req, res) {
 
 app.post('/question', jsonParser, function(req, res) {
 
-	var newquestion = req.body;
+	var newQuestion = req.body;
 
 	var headers = {
 	  'Content-Type': 'application/json',
@@ -103,13 +103,19 @@ app.post('/question', jsonParser, function(req, res) {
 	var req = http.request(options, function(res) {
 	 	res.setEncoding('utf-8');
 
-		req.write(newquestion);
-		req.end();
+	 	console.log('STATUS' + res.statusCode);
+
+	 	res.on('data', function(chunk) {
+	 		console.log('BODY: ' + chunk);
+	 	});
 	});
 
 	req.on('error', function(e) {
 	 	// TODO: handle error.
 	});
+
+	req.write(newQuestion);
+	req.end;
 });
 
 app.post('/statistics', jsonParser, function(req, res) {
