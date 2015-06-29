@@ -87,11 +87,11 @@ app.post('/question', jsonParser, function(req, res) {
 
 	var headers = {
 	  'Content-Type': 'application/json',
-	  'Content-Length': newquestion.length
+	  'Content-Length': newQuestion.length
 	};
 
 	var options = {
-	  host: 'http://localhost',
+	  host: 'localhost',
 	  port: 3000,
 	  path: '/question',
 	  method: 'POST',
@@ -112,6 +112,7 @@ app.post('/question', jsonParser, function(req, res) {
 
 	req.on('error', function(e) {
 	 	// TODO: handle error.
+	 	console.log('problem with request' + e.message);
 	});
 
 	req.write(newQuestion);

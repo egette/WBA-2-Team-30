@@ -58,7 +58,7 @@
 						alert('Ihre Anfrage wird verarbeitet');
 							$.ajax({
 								type: 'POST',
-								url: 'http://localhost:3000/question',
+								url: '/question',
 								data: JSON.stringify(data),
 								contentType: 'application/json'
 								}).done(function(){
