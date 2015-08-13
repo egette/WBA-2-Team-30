@@ -189,6 +189,7 @@ app.get('/quiz/:fach', function(req, res) {
 			res.json(question);
 			return;
 		}
+		
 		db.mget(rep, function(err, rep) {
 			rep.forEach(function(val) {
 				question.push(JSON.parse(val));

@@ -17,40 +17,101 @@ if ('development' == env) {
 	});
 }
 
-//Quiz aufrufen und abfragen
+// Fach für das Quiz auswählen
 app.get('/quiz', jsonParser, function(req, res) {
 	fs.readFile('./quiz.ejs', {encoding: 'utf-8'}, function(err, filestring) {
 		if(err) {
 			throw err;
 		} else {
 
-			var options = {
-				host: 'localhost',
-				port: 3000,
-				path: '/quiz/wba',
-				method: 'GET',
-				headers: {
-					accept: 'application/json'
-				}
-			}
-			console.log(options);
-			
-			var externalRequest = http.request(options, function(externalResponse) {
-				console.log('Connected');
-				externalResponse.on('data', function(chunk) {
-					var adata = JSON.parse(chunk);
-					var html = ejs.render(filestring, adata);
-
+			console.log('Connected to quiz');
+				var html = ejs.render(filestring);
 					res.setHeader('content-type', 'text/html');
 					res.writeHead(200);
 					res.write(html);
 					res.end();
-				});
-			});
+
 			console.log('Request end');
-			externalRequest.end();
 		}
 	}); 
+});
+
+
+//Quiz mit ausgeweahltem Fach starten
+app.get('/quiz/:fach', jsonParser, function(req, res) {
+fs.readFile('./quiz-gestartet.ejs', {encoding: 'utf-8'}, function(err, filestring) {
+	if(err) {
+		throw err;
+	} else {
+		
+        var fach = '/quiz/' + req.params.fach;
+		var random_entry;
+		var path_question_id;
+		var options_question;
+		
+		var options_fach_id = {
+				host: 'localhost',
+				port: 3000,
+				path: fach,
+				method: 'GET',
+				headers: {
+					accept: 'application/json'
+				}
+		}
+				
+		var externalRequest = http.request(options_fach_id, function(externalResponse) {
+			console.log('Verbunden und sucht die QuestionIDs zum Fach');
+			externalResponse.on('data', function(chunk) {
+				var adata = JSON.parse(chunk);
+					
+				adata.quizID = adata.quizID.filter(function(x){return x !== null});
+				console.log('Alle ID der Questions zum dem geweahlten Fach : ' + adata);
+					
+				random_entry = adata.quizID[Math.floor(Math.random() * adata.quizID.length)]	
+				random_entry = random_entry.id;
+				console.log('Die zufaellige FragenID  : ' + random_entry);
+	
+				path_question_id = '/question/' + random_entry;
+				console.log('Der Path zur QuestionID :  ' + path_question_id);
+			
+				options_question = {
+						host: 'localhost',
+						port: 3000,
+						path: path_question_id,
+						method: 'GET',
+						headers: {
+						accept: 'application/json'
+						}
+				}
+			
+				var externalRequest2 = http.request(options_question, function(externalResponse2) {
+					console.log('Anfrage nach der Question mit der zufälligen ID');
+					externalResponse2.on('data', function(chunk) {
+						var adata2 = [] ;
+						adata2.push(JSON.parse(chunk));
+						console.log(adata2);
+						
+						var daten = {questions: adata2};
+						console.log('Die daten : ' + daten);
+						
+						var html = ejs.render(filestring, daten);
+
+						res.setHeader('content-type', 'text/html');
+						res.writeHead(200);
+						res.write(html);
+						res.end();
+				
+					});
+					
+				}); // Ende vom zweiten externalRequest2
+				externalRequest2.end();
+			}); //Ende vom ersten externalRequest
+		});
+			
+		externalRequest.end();
+		console.log('Request end');
+	}; // Ende vom else
+});		// Ende vom fs.readFile
 });
 
 //Neue Frage einstellen
