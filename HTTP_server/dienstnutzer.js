@@ -63,10 +63,10 @@ fs.readFile('./quiz-gestartet.ejs', {encoding: 'utf-8'}, function(err, filestrin
 			console.log('Verbunden und sucht die QuestionIDs zum Fach');
 			externalResponse.on('data', function(chunk) {
 				var adata = JSON.parse(chunk);
-					
+				//Die leeren Stellen aus dem Array mit den IDs werden rausgefiltert 	
 				adata.quizID = adata.quizID.filter(function(x){return x !== null});
 				console.log('Alle ID der Questions zum dem geweahlten Fach : ' + adata);
-					
+				// Aus dem Array mit den IDs wird eine zufällige gewählt	
 				random_entry = adata.quizID[Math.floor(Math.random() * adata.quizID.length)]	
 				random_entry = random_entry.id;
 				console.log('Die zufaellige FragenID  : ' + random_entry);
@@ -83,7 +83,7 @@ fs.readFile('./quiz-gestartet.ejs', {encoding: 'utf-8'}, function(err, filestrin
 						accept: 'application/json'
 						}
 				}
-			
+				// Der Request um die Daten der Question mit Hilfe der ID zu bekommen
 				var externalRequest2 = http.request(options_question, function(externalResponse2) {
 					console.log('Anfrage nach der Question mit der zufälligen ID');
 					externalResponse2.on('data', function(chunk) {
