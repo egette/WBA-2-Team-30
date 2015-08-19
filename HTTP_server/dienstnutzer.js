@@ -17,6 +17,25 @@ if ('development' == env) {
 	});
 }
 
+// Hauptseite laden
+app.get('/', jsonParser, function(req, res) {
+	fs.readFile('./index.ejs', {encoding: 'utf-8'}, function(err, filestring) {
+		if(err) {
+			throw err;
+		} else {
+
+			console.log('Welcome!');
+				var html = ejs.render(filestring);
+					res.setHeader('content-type', 'text/html');
+					res.writeHead(200);
+					res.write(html);
+					res.end();
+
+			console.log('Request end');
+		}
+	}); 
+});
+
 // Fach für das Quiz auswählen
 app.get('/quiz', jsonParser, function(req, res) {
 	fs.readFile('./quiz.ejs', {encoding: 'utf-8'}, function(err, filestring) {
