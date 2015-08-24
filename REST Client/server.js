@@ -212,4 +212,6 @@ app.get('/quiz/:fach', function(req, res) {
 
 
 //Starting node Server on localhost:3000
-app.listen(3000);
+app.listen(3000, function() {
+	console.log("Server listens on Port 3000");
+});
