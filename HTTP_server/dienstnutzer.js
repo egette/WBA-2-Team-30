@@ -17,6 +17,7 @@ if ('development' == env) {
 	});
 }
 
+
 app.get('/', jsonParser, function(req, res) {
 	fs.readFile('./startseite.ejs', {encoding: 'utf-8'}, function(err, filestring) {
 		if(err) {
@@ -24,19 +25,20 @@ app.get('/', jsonParser, function(req, res) {
 		} else {
 			console.log('Connected to Home');
 			var html = ejs.render(filestring);
+
 					res.setHeader('content-type', 'text/html');
 					res.writeHead(200);
 					res.write(html);
 					res.end();
 
 			console.log('Request end');
+
 			
 			
 			
 		}//ende else
 	});//readFile
 });//haupt...
-
 
 
 // Fach für das Quiz auswählen
