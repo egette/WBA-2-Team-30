@@ -4,6 +4,7 @@ var bodyParser = require('body-parser');
 var jsonParser = bodyParser.json();
 var ejs = require('ejs');
 var fs = require('fs');
+var counter = 0;
 
 var app = express();
 
@@ -19,7 +20,7 @@ if ('development' == env) {
 
 
 app.get('/', jsonParser, function(req, res) {
-	fs.readFile('./startseite.ejs', {encoding: 'utf-8'}, function(err, filestring) {
+	fs.readFile('./index.html', {encoding: 'utf-8'}, function(err, filestring) {
 		if(err) {
 			throw err;
 		} else {
@@ -90,8 +91,14 @@ fs.readFile('./quiz-gestartet.ejs', {encoding: 'utf-8'}, function(err, filestrin
 				//Die leeren Stellen aus dem Array mit den IDs werden rausgefiltert 	
 				adata.quizID = adata.quizID.filter(function(x){return x !== null});
 				console.log('Alle ID der Questions zum dem geweahlten Fach : ' + adata);
-				// Aus dem Array mit den IDs wird eine zufällige gewählt	
-				random_entry = adata.quizID[Math.floor(Math.random() * adata.quizID.length)]	
+				// Aus dem Array mit den IDs wird eine zufällige gewählt
+				
+				random_entry = adata.quizID[counter];
+				counter = counter + 1;
+				if (counter == adata.quizID.length){
+					counter = 0; 
+				}
+				
 				random_entry = random_entry.id;
 				console.log('Die zufaellige FragenID  : ' + random_entry);
 	

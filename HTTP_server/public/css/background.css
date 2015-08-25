@@ -1,0 +1,64 @@
+.btn {
+	font-family: "Comic Zine OT";
+	font-size: 450%;
+}
+.quiz {
+	font-family: "Comic Zine OT";
+	font-size: 450%;
+	color: #FFFFFF;
+}
+.neuefrage {
+	font-family: "Comic Zine OT";
+	font-size: 250%;
+	word-spacing: normal;
+	white-space: nowrap;
+	color: #FFFFFF;
+}
+.statistik {
+	font-family: "Comic Zine OT";
+	color: #FFFFFF;
+	font-size: 320%;
+}
+.statistik:hover {
+	font-size: 370%;
+	text-decoration: none;
+	color: #FFFFFF;
+}
+.row .col-md-4.col-xs-12 .img-responsive.logo {
+}
+.logo {
+	-webkit-box-sizing: border-box;
+	-moz-box-sizing: border-box;
+	box-sizing: border-box;
+
+}
+
+
+
+.quiz:hover {
+	color: #FFFFFF;
+	font-size: 500%;
+	text-decoration: none;
+}
+.neuefrage:hover {
+	font-size: 300%;
+	text-decoration: none;
+	color: #FFFFFF;
+}
+.logo {
+}
+
+#quiz {
+	position: absolute;
+	top: 40px;
+	left: 50%;
+	transform: translate(-50%);
+	-webkit-transform: translate(-50%);
+	-moz-transform: translate(-50%);
+	-o-transform: translate(-50%);
+	-ms-transform: translate(-50%);
+}
+
+.img-responsive {
+	position: relative;
+} 
