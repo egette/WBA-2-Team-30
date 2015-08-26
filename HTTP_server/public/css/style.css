@@ -32,11 +32,6 @@ body {
 	font-size: 320%;
 }
 
-.statistik:hover {
-	text-decoration: none;
-	color: yellow;
-}
-
 .logo {
 	-webkit-box-sizing: border-box;
 	-moz-box-sizing: border-box;
@@ -44,14 +39,24 @@ body {
 
 }
 
+.menu > a {
+	margin-bottom: 40px;
+	display: block;
+}
+
+.statistik:hover {
+	text-decoration: none;
+	color: #F4E76F;
+}
+
 .quiz:hover {
-	color: yellow;
+	color: #F4E76F;
 	text-decoration: none;
 }
 
 .neuefrage:hover {
 	text-decoration: none;
-	color: yellow;
+	color: #F4E76F;
 }
 
 .logo {
