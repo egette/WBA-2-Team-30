@@ -59,7 +59,12 @@ body {
 	color: #F4E76F;
 }
 
-.logo {
+.right {
+	color: green;
+}
+
+.wrong {
+	color: red;
 }
 
 .centertext {

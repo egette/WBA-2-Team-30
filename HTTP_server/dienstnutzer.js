@@ -4,9 +4,10 @@ var bodyParser = require('body-parser');
 var jsonParser = bodyParser.json();
 var ejs = require('ejs');
 var fs = require('fs');
-var counter = 0;
 
 var app = express();
+
+var counter = 0;
 
 var env = process.env.NODE_ENV || 'development';
 if ('development' == env) {
@@ -120,7 +121,6 @@ fs.readFile('./quiz-gestartet.ejs', {encoding: 'utf-8'}, function(err, filestrin
 					externalResponse2.on('data', function(chunk) {
 						var adata2 = [] ;
 						adata2.push(JSON.parse(chunk));
-						console.log(adata2);
 						
 						var daten = {questions: adata2};
 						console.log('Die daten : ' + daten);
@@ -168,10 +168,8 @@ app.get('/newquestion', jsonParser, function(req, res) {
 app.post('/question', jsonParser, function(req, res) {
 
 	var newQuestion = req.body;
-	console.log('1');
 	var headers = {
 	  'Content-Type': 'application/json',
-	  //'Content-Length': newQuestion.length
 	};
 
 	var options = {
