@@ -20,7 +20,7 @@ if ('development' == env) {
 
 
 app.get('/', jsonParser, function(req, res) {
-	fs.readFile('./index.html', {encoding: 'utf-8'}, function(err, filestring) {
+	fs.readFile('./index.ejs', {encoding: 'utf-8'}, function(err, filestring) {
 		if(err) {
 			throw err;
 		} else {
