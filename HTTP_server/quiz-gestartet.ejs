@@ -30,17 +30,17 @@
 			</div>
 		<div class="col-md-8 col-xs-12"><img src="../Bilder/Block-klein.png" class="img-responsive" alt="Placeholder image">
 		<form id="quiz" class="centertext">
-			<h2>Die Frage <%= questions[0].id %></h2>
+			<h2 class="quizfont2">Frage <%= questions[0].id %></h2>
 				<fieldset>
 					<%= questions[0].question %> <br>
-					<label for="a">Antwort 1: <%= questions[0].a%></label> 
-					<input type="radio" id="a" value="a" name="Quiz"><br>
-					<label for="b">Antwort 2: <%= questions[0].b%></label>  
-					<input type="radio" id="b" value="b" name="Quiz"><br>
-					<label for="c">Antwort 3: <%= questions[0].c%></label>  
-					<input type="radio" id="c" value="c" name="Quiz"><br>
-					<label for="d">Antwort 4: <%= questions[0].d%></label>  
-					<input type="radio" id="d" value="d" name="Quiz"><br>
+					<label for="a"><span class="quizfont">A:   </span> <%= questions[0].random_ans[0] %></label> 
+					<input type="radio" id="a" value="0" name="Quiz"><br>
+					<label for="b"><span class="quizfont">B:   </span> <%= questions[0].random_ans[1] %></label>  
+					<input type="radio" id="b" value="1" name="Quiz"><br>
+					<label for="c"><span class="quizfont">C:   </span> <%= questions[0].random_ans[2] %></label>  
+					<input type="radio" id="c" value="2" name="Quiz"><br>
+					<label for="d"><span class="quizfont">D:   </span> <%= questions[0].random_ans[3] %></label>  
+					<input type="radio" id="d" value="3" name="Quiz"><br>
 				</fieldset>
 			<button type="submit">Eingaben absenden</button>
 		</form>
@@ -56,7 +56,7 @@
 	<script type="text/javascript">
 	$(document).ready(function() {
 
-		var answer = <%- questions[0].answer%>.value;
+		var answer = <%= questions[0].answer %>;
 
 		$('#quiz').submit(function (ev) {
 

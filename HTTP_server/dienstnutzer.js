@@ -122,9 +122,48 @@ fs.readFile('./quiz-gestartet.ejs', {encoding: 'utf-8'}, function(err, filestrin
 						var adata2 = [] ;
 						adata2.push(JSON.parse(chunk));
 						
-						var daten = {questions: adata2};
-						console.log('Die daten : ' + daten);
+						var random_ans = [];
+						var richtige_ans = adata2[0].a;
+						console.log('richtige ANS' + richtige_ans);
 						
+					    random_ans.push( adata2[0].a);
+						random_ans.push( adata2[0].b);
+						random_ans.push( adata2[0].c);
+						random_ans.push( adata2[0].d);
+						
+						console.log('random_ans A:  ' + random_ans[0]);
+						console.log('random_ans B:  ' + random_ans[1]);
+						console.log('random_ans C:  ' + random_ans[2]);
+						console.log('random_ans D:  ' + random_ans[3]);
+						
+								
+						function shuffle(o){
+							for(var j, x, i = o.length; i; j = Math.floor(Math.random() * i), x = o[--i], o[i] = o[j], o[j] = x);
+							return o;
+						}		
+							
+						shuffle(random_ans);
+						
+						for (var i = 0; i < random_ans.length; i++){
+							if(richtige_ans == random_ans[i]) {
+								richtige_ans = i;
+							}
+						};
+						
+						console.log('richtige ANS' + richtige_ans);
+						
+						adata2[0].answer = richtige_ans;
+						console.log('answer' + adata2[0].answer); 
+						
+						console.log('random_ans A:  ' + random_ans[0]);
+						console.log('random_ans B:  ' + random_ans[1]);
+						console.log('random_ans C:  ' + random_ans[2]);
+						console.log('random_ans D:  ' + random_ans[3]);
+						
+						adata2[0].random_ans = random_ans;
+						console.log(adata2);
+						
+						var daten = {questions: adata2};
 						var html = ejs.render(filestring, daten);
 
 						res.setHeader('content-type', 'text/html');
