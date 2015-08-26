@@ -29,7 +29,7 @@
 	          	</div>
 			</div>
 		<div class="col-md-8 col-xs-12"><img src="../Bilder/Block-klein.png" class="img-responsive" alt="Placeholder image">
-		<form class="centertext">
+		<form id="quiz" class="centertext">
 			<h2>Die Frage <%= questions[0].id %></h2>
 				<fieldset>
 					<%= questions[0].question %> <br>
@@ -54,36 +54,39 @@
 	<!-- jQuery (necessary for Bootstrap's JavaScript plugins) --> 
 	<script src="../js/jquery-1.11.2.min.js"></script>
 	<script type="text/javascript">
-	$(document).ready(function(){
-		var frm = $('#quiz');
-		frm.submit(function (ev) {
-			alert('Ihre Anfrage wird verarbeitet');
+	$(document).ready(function() {
+
+		var answer = <%- questions[0].answer%>.value;
+
+		$('#quiz').submit(function (ev) {
 
 			var gewaehlte_antwort = $('input[name=Quiz]:checked', '#quiz').val();
-			alert(gewaehlte_antwort);
-			var richtig = 0; 
-			if (questions[0].answer == gewaehlte_antwort) richtig = 1;
+			if(answer == gewaehlte_antwort) {
+				$('#quiz').addClass('right');
+				alert('richtig');
+			} else {
+				$('#quiz').addClass('wrong');
+				alert('fail');
+			}
 
-		var data = {
-			"id" : questions[0].id,
-			"richtig" : richtig
-		};
-		/*
-		$.ajax({
-			type: 'POST',
-			url: '/statistics',
-			data: JSON.stringify(data),
-			contentType: 'application/json'
-		}).done(function(){
-			alert('Daten wurden uebermittelt.');
-		}).fail(function(e){
-			alert('Daten konnten nicht uebermittelt werden.');
-		});*/
+			    var data = {
+					"id" : questions[0].id,
+					"richtig" : richtig
+				}
 
-			ev.preventDefault();
+			/*
+			$.ajax({
+				type: 'POST',
+				url: '/statistics',
+				data: JSON.stringify(data),
+				contentType: 'application/json'
+			}).done(function(){
+				alert('Daten wurden uebermittelt.');
+			}).fail(function(e){
+				alert('Daten konnten nicht uebermittelt werden.');
+			});*/
 		});
-			alert('Seite geladen');
-		});
+	});
 	</script>
 	<!-- Include all compiled plugins (below), or include individual files as needed --> 
 	<script src="../js/bootstrap.js"></script>
