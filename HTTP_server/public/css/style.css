@@ -2,11 +2,17 @@
 	font-family: "Comic Zine OT";
 	font-size: 450%;
 }
+
+body {
+	background-image: url(../Bilder/wood-wallpaper-8.jpg);
+}
+
 .quiz {
 	font-family: "Comic Zine OT";
 	font-size: 450%;
 	color: #FFFFFF;
 }
+
 .neuefrage {
 	font-family: "Comic Zine OT";
 	font-size: 250%;
@@ -14,18 +20,18 @@
 	white-space: nowrap;
 	color: #FFFFFF;
 }
+
 .statistik {
 	font-family: "Comic Zine OT";
 	color: #FFFFFF;
 	font-size: 320%;
 }
+
 .statistik:hover {
-	font-size: 370%;
 	text-decoration: none;
-	color: #FFFFFF;
+	color: yellow;
 }
-.row .col-md-4.col-xs-12 .img-responsive.logo {
-}
+
 .logo {
 	-webkit-box-sizing: border-box;
 	-moz-box-sizing: border-box;
@@ -33,18 +39,16 @@
 
 }
 
-
-
 .quiz:hover {
-	color: #FFFFFF;
-	font-size: 500%;
+	color: yellow;
 	text-decoration: none;
 }
+
 .neuefrage:hover {
-	font-size: 300%;
 	text-decoration: none;
-	color: #FFFFFF;
+	color: yellow;
 }
+
 .logo {
 }
 
