@@ -1,3 +1,8 @@
+@font-face {
+    font-family: "Comic Zine OT";
+    src: url(../fonts/comic_zine_ot.otf);
+}
+
 .btn {
 	font-family: "Comic Zine OT";
 	font-size: 450%;
