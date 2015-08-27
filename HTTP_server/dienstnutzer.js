@@ -65,10 +65,7 @@ app.get('/quiz', jsonParser, function(req, res) {
 
 //Quiz mit ausgeweahltem Fach starten
 app.get('/quiz/:fach', jsonParser, function(req, res) {
-fs.readFile('./quiz-gestartet.ejs', {encoding: 'utf-8'}, function(err, filestring) {
-	if(err) {
-		throw err;
-	} else {
+
 		
         var fach = '/quiz/' + req.params.fach;
 		var random_entry;
@@ -91,6 +88,30 @@ fs.readFile('./quiz-gestartet.ejs', {encoding: 'utf-8'}, function(err, filestrin
 				var adata = JSON.parse(chunk);
 				//Die leeren Stellen aus dem Array mit den IDs werden rausgefiltert 	
 				adata.quizID = adata.quizID.filter(function(x){return x !== null});
+				if(adata.quizID.length == 0) {
+					console.log('Keine Fragen vorhanden');
+					fs.readFile('./keinefragen.ejs', {encoding: 'utf-8'}, function(err, filestring) {
+						if(err) {
+							throw err;
+						} else {
+
+							console.log('Connected to keinefragen');
+								var html = ejs.render(filestring);
+								res.setHeader('content-type', 'text/html');
+								res.writeHead(200);
+								res.write(html);
+								res.end();
+
+							console.log('Request end');
+						}
+					});
+					externalRequest.end();
+					
+				} else {
+				fs.readFile('./quiz-gestartet.ejs', {encoding: 'utf-8'}, function(err, filestring) {
+					if(err) {
+						throw err;
+					} else {
 				console.log('Alle ID der Questions zum dem geweahlten Fach : ' + adata);
 				// Aus dem Array mit den IDs wird eine zufällige gewählt
 				
@@ -174,14 +195,16 @@ fs.readFile('./quiz-gestartet.ejs', {encoding: 'utf-8'}, function(err, filestrin
 					});
 					
 				}); // Ende vom zweiten externalRequest2
-				externalRequest2.end();
+				externalRequest2.end();	
+				}; // Ende vom else
+				});		// Ende vom fs.readFile
+				}; // ende von else
 			}); //Ende vom ersten externalRequest
 		});
 			
 		externalRequest.end();
 		console.log('Request end');
-	}; // Ende vom else
-});		// Ende vom fs.readFile
+
 });
 
 //Neue Frage einstellen
