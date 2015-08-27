@@ -119,9 +119,9 @@ app.post('/question', function(req, res) {
 
 //Getting Question by ID
 app.get('/question/:id', function(req, res) {
-	db.get('question:'+req.params.id, function(err, rep) {
-		if(rep) {
-			res.type('json').send(rep);
+	db.get('question:'+req.params.id, function(err, adata2) {
+		if(adata2) {
+			res.type('json').send(adata2);
 		} else {
 			res.status(404).type('text').send('Diese Frage ist nicht vorhanden')
 		}
