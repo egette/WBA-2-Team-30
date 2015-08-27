@@ -1,13 +1,37 @@
+
 <html>
-	<head>
-		<title>Quiz</title>
-		<meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
-		<script src="http://code.jquery.com/jquery-latest.js"></script>
-		<!--<script src="jquery.js"></script>-->
-	</head>
-	<body>
+<head>
+	<title>StudiQuiz</title>
+	<meta charset="utf-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	
+	<!-- Bootstrap -->
+	<link href="../css/bootstrap.css" rel="stylesheet">
+	<link href="../css/style.css" rel="stylesheet" type="text/css">
+	<script src="http://code.jquery.com/jquery-latest.js"></script>
+	<!--<script type="jquery.js"></script>-->
+</head>
+<body>
+	<div class="container">
+		<div class="row">
+			<div class="col-md-4 col-xs-1"></div>
+			<div class="col-md-4 col-xs-12" align="center">
+			<a href="http://localhost:3001"><img src="../Bilder/logo2.png" class="img-responsive logo" alt="Placeholder image"></a>
+		</div>
+		<div class="col-md-4 col-xs-1"></div>
+		</div>
+		<div class="row">
+			<div class="col-md-2 col-xs-12">
+				<div class="menu" align="center">
+		            <a href="http://localhost:3001/quiz" title="Quiz starten" class="quiz">Quiz</a>
+		            <a href="http://localhost:3001/newquestion" title="Neue Frage erstellen" class="neuefrage">Neue Frage <br> erstellen</a>
+		            <a href="http://localhost:3001/statistics" title="Statistiken anzeigen" class="statistik">Statistik</a>
+	          	</div>
+			</div>
+		<div class="col-md-8 col-xs-12"><img src="../Bilder/Block-klein.png" class="img-responsive" alt="Placeholder image">
+		<form id="newquestion" class="centertext quizfont3">	
 		<h1>Neue Frage erstellen</h1>
-		<form id="newquestion">
         <label for="frage">Bitte geben Sie eine Frage ein:</label> <br>
         <input type="text" id="frage" maxlength="5000"><br>
  
@@ -24,17 +48,25 @@
         <input type="text" id="antwort4" maxlength="5000"><br>
 
         <select id="fach">
-    		<option>Fach auswählen</option>
+    		<option>Fach ausw&aumlhlen</option>
     		<option>AP1</option>
     		<option>BS1</option>
         	<option>ST</option>
-      	</select><br>
+      	</select><br><br>
 			
-        <button type="reset">Eingaben zuruecksetzen</button>
+        <button type="reset">Eingaben zuruecksetzen</button><br><br>
         <button type="submit">Eingaben absenden</button>
 
         </form>			
-	</body>
+	</div>
+		</div>
+			<div class="row">
+			<div class="col-md-2"></div>
+			<div class="col-md-6"></div>
+		</div>
+	</div>
+	<!-- jQuery (necessary for Bootstrap's JavaScript plugins) --> 
+	<script src="../js/jquery-1.11.2.min.js"></script>
 		<script type="text/javascript">
 			$(document).ready(function(){
 						var frm = $('#newquestion');
@@ -69,8 +101,10 @@
 							});
 							ev.preventDefault();
 						});
-				alert('Seite geladen');
+			
 			});
 		</script>
-	</body>
+	<!-- Include all compiled plugins (below), or include individual files as needed --> 
+	<script src="../js/bootstrap.js"></script>
+</body>
 </html>

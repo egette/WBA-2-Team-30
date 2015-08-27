@@ -95,3 +95,24 @@ body {
 	color: black;
 	font-size: 400%;
 }
+
+.quizfont3 {
+	font-family: "Comic Zine OT";
+	color: black;
+	font-size: 150%;
+	font-weight: 100;
+}
+
+.fachfont {
+	font-family: "Comic Zine OT";
+	color: black;
+	font-size: 200%;
+	text-decoration: none;
+}
+	
+.fachfont:hover {
+	font-family: "Comic Zine OT";
+	color: #357332;
+	font-size: 200%;
+	text-decoration: none;
+}
