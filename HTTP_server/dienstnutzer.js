@@ -268,12 +268,13 @@ app.post('/question', jsonParser, function(req, res) {
 });
 
 //Posting statistics (not functional as of now)
-app.post('/statistics', jsonParser, function(req, res) {
-  var statistics = req.body;
-  console.log(statistics);
+app.post('/statistic',jsonParser, function(req, res) {
+  console.log('Post on statistics');
+  res.writeHead(200);
+  res.end();
 });
 
-app.get('/statistics', jsonParser, function(req, res) {
+app.get('/statistic', jsonParser, function(req, res) {
   fs.readFile('./statistics.ejs', {
     encoding: 'utf-8'
   }, function(err, filestring) {

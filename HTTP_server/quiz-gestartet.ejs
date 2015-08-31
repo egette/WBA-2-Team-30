@@ -42,7 +42,7 @@
 					<label for="d"><span class="quizfont">D:   </span> <%= questions[0].random_ans[3] %></label>  
 					<input type="radio" id="d" value="3" name="Quiz"><br>
 				</fieldset>
-			<button type="submit">Eingaben absenden</button>
+			<button type="button" id="enter">Eingaben absenden</button>
 		</form>
 	</div>
 		</div>
@@ -52,39 +52,45 @@
 		</div>
 	</div>
 	<!-- jQuery (necessary for Bootstrap's JavaScript plugins) --> 
-	<script src="../js/jquery-1.11.2.min.js"></script>
 	<script type="text/javascript">
 	$(document).ready(function() {
 
 		var answer = <%= questions[0].answer %>;
 
-		$('#quiz').submit(function (ev) {
+		$('#enter').click(function (ev) {
 
 			var gewaehlte_antwort = $('input[name=Quiz]:checked', '#quiz').val();
-			if(answer == gewaehlte_antwort) {
+			if(answer == gewaehlte_antwort) {				
 				$('#quiz').addClass('right');
 				alert('richtig');
+
+				alert('Statistik wird gesendet');
+
+				$.ajax({
+					type: 'POST',
+					url: '/statistic',
+					data: JSON.stringify({'right': 1}),
+					contentType: 'application/json; charset=utf-8',
+            		dataType: 'json'
+				}).done(function() {
+				alert('Daten wurden uebermittelt.');
+			});
 			} else {
 				$('#quiz').addClass('wrong');
 				alert('fail');
+
+				alert('Statistik wird gesendet');
+
+				$.ajax({
+					type: 'POST',
+					url: '/statistic',
+					data: JSON.stringify({'right': 0}),
+					contentType: 'application/json; charset=utf-8',
+            		dataType: 'json'
+				}).done(function() {
+					alert('Daten wurden übermittelt');
+				});
 			}
-
-			    var data = {
-					"id" : questions[0].id,
-					"richtig" : richtig
-				}
-
-			/*
-			$.ajax({
-				type: 'POST',
-				url: '/statistics',
-				data: JSON.stringify(data),
-				contentType: 'application/json'
-			}).done(function(){
-				alert('Daten wurden uebermittelt.');
-			}).fail(function(e){
-				alert('Daten konnten nicht uebermittelt werden.');
-			});*/
 		});
 	});
 	</script>

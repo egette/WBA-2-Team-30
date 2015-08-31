@@ -174,7 +174,7 @@ app.get('/question', function(req, res) {
 		var data = {questions: question};
 		
 		res.json(data);
-		console.log(data);
+		console.log('All questions sent');
 		});
 	});
 });
@@ -196,8 +196,6 @@ app.get('/quiz/:fach', function(req, res) {
 		});
 
 		question = question.map(function(question) {
-			console.log(question.fach);
-			console.log(req.params.fach);
 			if(question.fach == fachUp) {
 				return {id: question.id};
 			}
@@ -205,9 +203,19 @@ app.get('/quiz/:fach', function(req, res) {
 		var data = {quizID: question};
 		
 		res.json(data);
-		console.log(data);
 		});
 	});
+});
+
+/*Posting statistics on Database*/
+app.post('/statistic', function(req, res) {
+	console.log('POST auf Statistics');
+	res.json(request.body);
+});
+
+/*Getting statistics*/
+app.get('/statistic', function(req, res) {
+	console.log('GET auf statistic');
 });
 
 
