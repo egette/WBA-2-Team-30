@@ -168,6 +168,7 @@ app.get('/quiz/:fach', jsonParser, function(req, res) {
                 adata2[0].answer = richtige_ans;
 
                 adata2[0].random_ans = random_ans;
+                console.log(adata2);
 
                 var daten = {
                   questions: adata2
@@ -286,23 +287,42 @@ app.post('/statistic',jsonParser, function(req, res) {
 });
 
 app.get('/statistic', jsonParser, function(req, res) {
-  fs.readFile('./statistics.ejs', {
-    encoding: 'utf-8'
-  }, function(err, filestring) {
-    if (err) {
-      throw err;
-    } else {
-      console.log('Connected to statistics');
-      var html = ejs.render(filestring);
-      res.setHeader('content-type', 'text/html');
-      res.writeHead(200);
-      res.write(html);
-      res.end();
+  var statistics = {
+    host: 'localhost',
+    port: 3000,
+    path: '/statistic',
+    method: 'GET',
+    headers: {
+      accept: 'application/json'
+    }
+  }
 
-      console.log('Request end');
+  var externalRequest = http.request(statistics, function(externalResponse) {
+    console.log('Connected to statistics on database server');
 
-    } //ende else
-  }); //readFile
+      externalResponse.on('data', function(chunk) {
+        var adata = JSON.parse(chunk);
+        console.log(adata);
+      });
+
+        
+      fs.readFile('./statistics.ejs', {
+        encoding: 'utf-8'
+      }, function(err, filestring) {
+        if (err) {
+          throw err;
+        } else {
+          console.log('Connected to statistics');
+          var html = ejs.render(filestring);
+          res.setHeader('content-type', 'text/html');
+          res.writeHead(200);
+          res.write(html);
+          res.end();
+
+          console.log('Request end');
+        } //ende else
+      }); //readFile
+  });
 });
 
 app.listen(3001, function() {

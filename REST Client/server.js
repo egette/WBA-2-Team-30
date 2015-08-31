@@ -228,6 +228,24 @@ app.post('/statistic', function(req, res) {
 /*Getting statistics*/
 app.get('/statistic', function(req, res) {
 	console.log('GET auf statistic');
+	var stat = []
+
+	for(var i = 0; i < 3; i++) {
+		if(i == 0) {
+			db.get("right", function (err, reply) {
+		        stat.push(JSON.parse(reply));
+		        console.log(reply);
+		    });
+		} else if(i == 1) {
+		    db.get("wrong", function (err, reply) {
+		        stat.push(JSON.parse(reply));
+		        console.log(reply);
+			});
+		} else if (i == 2) {
+			console.log('stat: ' + stat);
+			res.json(stat);
+		}
+	}
 });
 
 
