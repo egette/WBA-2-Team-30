@@ -115,7 +115,6 @@ app.get('/quiz/:fach', jsonParser, function(req, res) {
           if (err) {
             throw err;
           } else {
-            console.log('Alle ID der Questions zum dem geweahlten Fach : ' + adata);
             // Aus dem Array mit den IDs wird eine zufällige gewählt
 
             random_entry = adata.quizID[counter];
@@ -125,10 +124,8 @@ app.get('/quiz/:fach', jsonParser, function(req, res) {
             }
 
             random_entry = random_entry.id;
-            console.log('Die zufaellige FragenID  : ' + random_entry);
 
             path_question_id = '/question/' + random_entry;
-            console.log('Der Path zur QuestionID :  ' + path_question_id);
 
             options_question = {
                 host: 'localhost',
@@ -148,17 +145,11 @@ app.get('/quiz/:fach', jsonParser, function(req, res) {
 
                 var random_ans = [];
                 var richtige_ans = adata2[0].a;
-                console.log('richtige ANS' + richtige_ans);
 
                 random_ans.push(adata2[0].a);
                 random_ans.push(adata2[0].b);
                 random_ans.push(adata2[0].c);
                 random_ans.push(adata2[0].d);
-
-                console.log('random_ans A:  ' + random_ans[0]);
-                console.log('random_ans B:  ' + random_ans[1]);
-                console.log('random_ans C:  ' + random_ans[2]);
-                console.log('random_ans D:  ' + random_ans[3]);
 
                 function shuffle(o) {
                   for (var j, x, i = o.length; i; j = Math.floor(Math.random() * i), x = o[--i], o[i] = o[j], o[j] = x);
@@ -173,18 +164,10 @@ app.get('/quiz/:fach', jsonParser, function(req, res) {
                   }
                 };
 
-                console.log('richtige ANS' + richtige_ans);
 
                 adata2[0].answer = richtige_ans;
-                console.log('answer' + adata2[0].answer);
-
-                console.log('random_ans A:  ' + random_ans[0]);
-                console.log('random_ans B:  ' + random_ans[1]);
-                console.log('random_ans C:  ' + random_ans[2]);
-                console.log('random_ans D:  ' + random_ans[3]);
 
                 adata2[0].random_ans = random_ans;
-                console.log(adata2);
 
                 var daten = {
                   questions: adata2
@@ -269,8 +252,36 @@ app.post('/question', jsonParser, function(req, res) {
 
 //Posting statistics (not functional as of now)
 app.post('/statistic',jsonParser, function(req, res) {
-  console.log('Post on statistics');
-  res.writeHead(200);
+  console.log('Post on statistic');
+  var newStat = req.body;
+  var headers = {
+    'Content-Type': 'application/json',
+  };
+
+  var options = {
+    host: 'localhost',
+    port: 3000,
+    path: '/statistic',
+    method: 'POST',
+    headers: headers
+  };
+
+  var req = http.request(options, function(res) {
+    res.setEncoding('utf-8');
+
+    console.log('STATUS' + res.statusCode);
+
+    res.on('data', function(chunk) {
+      console.log('BODY: ' + chunk);
+    });
+  });
+
+  req.on('error', function(e) {
+    console.log('problem with request' + e.message);
+  });
+
+  req.write(JSON.stringify(newStat));
+  req.end();
   res.end();
 });
 

@@ -53,6 +53,10 @@
 	</div>
 	<!-- jQuery (necessary for Bootstrap's JavaScript plugins) --> 
 	<script type="text/javascript">
+	$( document ).ajaxComplete(function() {
+  		location.reload();
+	});
+
 	$(document).ready(function() {
 
 		var answer = <%= questions[0].answer %>;
@@ -72,9 +76,7 @@
 					data: JSON.stringify({'right': 1}),
 					contentType: 'application/json; charset=utf-8',
             		dataType: 'json'
-				}).done(function() {
-				alert('Daten wurden uebermittelt.');
-			});
+				});
 			} else {
 				$('#quiz').addClass('wrong');
 				alert('fail');
@@ -86,9 +88,7 @@
 					url: '/statistic',
 					data: JSON.stringify({'right': 0}),
 					contentType: 'application/json; charset=utf-8',
-            		dataType: 'json'
-				}).done(function() {
-					alert('Daten wurden übermittelt');
+            		dataType: 'json',
 				});
 			}
 		});

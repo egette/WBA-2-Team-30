@@ -210,7 +210,19 @@ app.get('/quiz/:fach', function(req, res) {
 /*Posting statistics on Database*/
 app.post('/statistic', function(req, res) {
 	console.log('POST auf Statistics');
-	res.json(request.body);
+	var newStat = req.body;
+	console.log('Gesendetes value: ' + newStat.right);
+	if(newStat.right == 1) {
+		db.incr('right', function(err, reply) {
+	        console.log('Anzahl der richtigen Fragen: ' + reply);
+	    });
+	} else {
+	    db.incr('wrong', function(err, reply) {
+	        console.log('Anzahl der falschen Fragen :' + reply);
+	    });
+	}
+	res.writeHead(200);
+	res.end();
 });
 
 /*Getting statistics*/
