@@ -213,12 +213,12 @@ app.post('/statistic', function(req, res) {
 	var newStat = req.body;
 	console.log('Gesendetes value: ' + newStat.right);
 	if(newStat.right == 1) {
-		db.incr('right', function(err, reply) {
-	        console.log('Anzahl der richtigen Fragen: ' + reply);
+		db.incr('right', function(err, rep) {
+	        console.log('Anzahl der richtigen Fragen: ' + rep);
 	    });
 	} else {
-	    db.incr('wrong', function(err, reply) {
-	        console.log('Anzahl der falschen Fragen :' + reply);
+	    db.incr('wrong', function(err, rep) {
+	        console.log('Anzahl der falschen Fragen :' + rep);
 	    });
 	}
 	res.writeHead(200);
@@ -228,24 +228,22 @@ app.post('/statistic', function(req, res) {
 /*Getting statistics*/
 app.get('/statistic', function(req, res) {
 	console.log('GET auf statistic');
-	var stat = []
 
-	for(var i = 0; i < 3; i++) {
-		if(i == 0) {
-			db.get("right", function (err, reply) {
-		        stat.push(JSON.parse(reply));
-		        console.log(reply);
-		    });
-		} else if(i == 1) {
-		    db.get("wrong", function (err, reply) {
-		        stat.push(JSON.parse(reply));
-		        console.log(reply);
-			});
-		} else if (i == 2) {
-			console.log('stat: ' + stat);
-			res.json(stat);
-		}
-	}
+	var stats = [];
+	db.get("right", function (err, rep) {
+        var right = {right: rep};
+        console.log(right);
+        stats.push(right);
+
+	    db.get("wrong", function (err, rep) {
+			var wrong = {wrong: rep};
+			console.log(wrong);
+	        stats.push(wrong);
+
+	        console.log(stats);
+			res.json(stats);
+		});
+    });
 });
 
 
