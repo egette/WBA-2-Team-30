@@ -287,7 +287,9 @@ app.post('/statistic',jsonParser, function(req, res) {
 });
 
 app.get('/statistic', jsonParser, function(req, res) {
-  var statistics = {
+  console.log('GET auf statistic');
+/*
+  var stats = {
     host: 'localhost',
     port: 3000,
     path: '/statistic',
@@ -297,32 +299,16 @@ app.get('/statistic', jsonParser, function(req, res) {
     }
   }
 
-  var externalRequest = http.request(statistics, function(externalResponse) {
+  var externalRequest = http.request(stats, function(externalResponse) {
     console.log('Connected to statistics on database server');
 
       externalResponse.on('data', function(chunk) {
         var adata = JSON.parse(chunk);
         console.log(adata);
       });
-
-        
-      fs.readFile('./statistics.ejs', {
-        encoding: 'utf-8'
-      }, function(err, filestring) {
-        if (err) {
-          throw err;
-        } else {
-          console.log('Connected to statistics');
-          var html = ejs.render(filestring);
-          res.setHeader('content-type', 'text/html');
-          res.writeHead(200);
-          res.write(html);
-          res.end();
-
-          console.log('Request end');
-        } //ende else
-      }); //readFile
   });
+*/
+  res.end();
 });
 
 app.listen(3001, function() {
