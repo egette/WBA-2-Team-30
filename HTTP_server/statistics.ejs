@@ -7,6 +7,7 @@
     <!-- Bootstrap -->
 	  <link href="css/bootstrap.css" rel="stylesheet">
 	  <link href="css/style.css" rel="stylesheet" type="text/css">
+    <script src="http://code.jquery.com/jquery-latest.js"></script>
   </head>
   <body>
     <div class="container">
@@ -23,16 +24,32 @@
             <a href="http://localhost:3001/statistics" title="Statistiken anzeigen" class="statistik">Statistik</a>
           </div>
         </div>
-          <div class="col-md-8 col-xs-12"><img src="Bilder/Block-klein.png" class="img-responsive" alt="Placeholder image"></div>
+          <div class="col-md-8 col-xs-12"><img src="Bilder/Block-klein.png" class="img-responsive" alt="Placeholder image">
+            <div class="statwrapper centertext">
+              <div class="bar" id="one"><p class="barstat">Richtige Fragen: <%= stat[0].right %></p></div>
+              <div class="bar" id="two"><p class="barstat">Falsche Fragen: <%= stat[1].wrong %></p></div>
+            </div>
+          </div>
       </div>
       <div class="row">
         <div class="col-md-2"></div>
         <div class="col-md-6"></div>
       </div>
     </div>
-	<!-- jQuery (necessary for Bootstrap's JavaScript plugins) --> 
-	<script src="js/jquery-1.11.2.min.js"></script>
+    <script type="text/javascript">
+    $(document).ready(function() {
+      setTimeout(function(){
+        var right = <%= stat[0].right %>
+        var wrong = <%= stat[1].wrong %>
 
+        var rightpx = (400 / ( (100 / ( right + wrong ) ) * right + (100 / ( right + wrong ) ) * wrong ) ) * (100 / ( right + wrong ) ) * right;
+        var wrongpx = (400 / ( (100 / ( right + wrong ) ) * right + (100 / ( right + wrong ) ) * wrong ) ) * (100 / ( right + wrong ) ) * wrong;
+
+        $("#one").css("height", rightpx + "px");
+        $("#two").css("height", wrongpx + "px");
+      },1000);
+    });
+    </script>
 	<!-- Include all compiled plugins (below), or include individual files as needed --> 
 	<script src="js/bootstrap.js"></script>
   </body>

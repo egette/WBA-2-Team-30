@@ -288,28 +288,54 @@ app.post('/statistic',jsonParser, function(req, res) {
 
 app.get('/statistic', jsonParser, function(req, res) {
   console.log('GET auf statistic');
-/*
-  var stats = {
+
+  var statpath = {
     host: 'localhost',
     port: 3000,
     path: '/statistic',
     method: 'GET',
     headers: {
-      accept: 'application/json'
+      accept: 'applicatio/json'
     }
   }
 
-  var externalRequest = http.request(stats, function(externalResponse) {
-    console.log('Connected to statistics on database server');
+  var externalRequest = http.request(statpath, function(externalResponse) {
+    externalResponse.on('data', function(chunk) {
+      var adata = JSON.parse(chunk);
+      var right = adata[0].right;
+      var wrong = adata[1].wrong;
+      console.log('Right: ' + right);
+      console.log('Wrong: ' + wrong);
 
-      externalResponse.on('data', function(chunk) {
-        var adata = JSON.parse(chunk);
-        console.log(adata);
-      });
+      fs.readFile('./statistics.ejs', {
+        encoding: 'utf-8'
+      }, function(err, filestring) {
+        if (err) {
+          throw err;
+        } else {
+          console.log('Connected to statistic');
+
+          var daten = {
+            stat: adata
+          };
+
+          var html = ejs.render(filestring, daten);
+
+          res.setHeader('content-type', 'text/html');
+          res.writeHead(200);
+          res.write(html);
+          res.end();
+
+          console.log('Request end');
+        } //ende else
+      }); //readFile
+
+
+    });
   });
-*/
-  res.end();
+  externalRequest.end();
 });
+
 
 app.listen(3001, function() {
   console.log("Server listens on Port 3001");

@@ -116,3 +116,35 @@ body {
 	font-size: 200%;
 	text-decoration: none;
 }
+
+.statwrapper {
+  top: 60px;
+  height: 400px;
+  width: 400px;
+}
+
+.bar {
+  width: 150px;
+  height: 40px;
+  position: absolute;
+  bottom: 88px;
+  transition: height 1s;
+  -webkit-transition: height 1s;
+  -moz-transition: height 1s;
+  -o-transition: height 1s;
+  -ms-transition: height 1s;
+}
+
+.barstat {
+	margin-top: -20px;
+}
+
+#one {
+  left: 40px;
+  background-color: #8BC34A;
+}
+
+#two {
+  left: 210px;
+  background-color: #009688;
+}
