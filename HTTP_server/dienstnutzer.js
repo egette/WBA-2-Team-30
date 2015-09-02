@@ -295,7 +295,7 @@ app.get('/statistic', jsonParser, function(req, res) {
     path: '/statistic',
     method: 'GET',
     headers: {
-      accept: 'applicatio/json'
+      accept: 'application/json'
     }
   }
 
