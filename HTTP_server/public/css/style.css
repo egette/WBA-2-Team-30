@@ -118,7 +118,7 @@ body {
 }
 
 .statwrapper {
-  top: 60px;
+  top: 150px;
   height: 400px;
   width: 400px;
 }
@@ -147,4 +147,9 @@ body {
 #two {
   left: 210px;
   background-color: #009688;
+}
+
+.stbutton {
+	position: absolute;
+	bottom: 40;
 }

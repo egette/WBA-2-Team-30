@@ -73,7 +73,7 @@
 				$.ajax({
 					type: 'POST',
 					url: '/statistic',
-					data: JSON.stringify({'right': 1}),
+					data: JSON.stringify({<%= questions[0].fach %>: 1}),
 					contentType: 'application/json; charset=utf-8',
             		dataType: 'json'
 				});
@@ -86,7 +86,7 @@
 				$.ajax({
 					type: 'POST',
 					url: '/statistic',
-					data: JSON.stringify({'right': 0}),
+					data: JSON.stringify({<%= questions[0].fach %>: 0}),
 					contentType: 'application/json; charset=utf-8',
             		dataType: 'json',
 				});

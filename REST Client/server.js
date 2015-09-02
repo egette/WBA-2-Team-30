@@ -209,17 +209,45 @@ app.get('/quiz/:fach', function(req, res) {
 
 /*Posting statistics on Database*/
 app.post('/statistic', function(req, res) {
-	console.log('POST auf Statistics');
-	var newStat = req.body;
-	console.log('Gesendetes value: ' + newStat.right);
-	if(newStat.right == 1) {
-		db.incr('right', function(err, rep) {
-	        console.log('Anzahl der richtigen Fragen: ' + rep);
-	    });
-	} else {
-	    db.incr('wrong', function(err, rep) {
-	        console.log('Anzahl der falschen Fragen :' + rep);
-	    });
+
+	console.log(req.body);
+	console.log('AP1: ' + req.body.AP1);
+	console.log('BS1: ' + req.body.BS1);
+	console.log('WBA: ' + req.body.WBA);
+
+	if(req.body.AP1 != undefined) {
+		console.log('AP1 ist das Fach');
+		if(req.body.AP1 == 1) {
+			db.incr('ap1r', function(err, rep) {
+				console.log('Anzahl der richtigen Fragen: ' + rep);
+			});
+		} else {
+			db.incr('ap1w', function(err, rep) {
+				console.log('Anzahl der richtigen Fragen: ' + rep);
+			});
+		}
+	} else if(req.body.BS1 != undefined) {
+		console.log('BS1 ist das Fach');
+		if(req.body.BS1 == 1) {
+			db.incr('bs1r', function(err, rep) {
+				console.log('Anzahl der richtigen Fragen: ' + rep);
+			});
+		} else {
+			db.incr('bs1w', function(err, rep) {
+				console.log('Anzahl der richtigen Fragen: ' + rep);
+			});
+		}
+	} else if(req.body.WBA != undefined) {
+		console.log('WBA ist das Fach');
+		if(req.body.WBA == 1) {
+			db.incr('wbar', function(err, rep) {
+				console.log('Anzahl der richtigen Fragen: ' + rep);
+			});
+		} else {
+			db.incr('wbaw', function(err, rep) {
+				console.log('Anzahl der richtigen Fragen: ' + rep);
+			});
+		}
 	}
 	res.writeHead(200);
 	res.end();
@@ -230,20 +258,32 @@ app.get('/statistic', function(req, res) {
 	console.log('GET auf statistic');
 
 	var stats = [];
-	db.get("right", function (err, rep) {
-        var right = {right: rep};
-        console.log(right);
-        stats.push(right);
 
-	    db.get("wrong", function (err, rep) {
-			var wrong = {wrong: rep};
-			console.log(wrong);
-	        stats.push(wrong);
-
-	        console.log(stats);
-			res.json(stats);
+	db.get('ap1r', function (err, rep) {
+		var ap1r = {ap1r: rep};
+		stats.push(ap1r);
+		db.get('ap1w', function (err, rep) {
+			var ap1w = {ap1w: rep};
+			stats.push(ap1w);
+			db.get('bs1r', function (err, rep) {
+				var bs1r = {bs1r: rep};
+				stats.push(bs1r);
+				db.get('bs1w', function (err, rep) {
+					var bs1w = {bs1w: rep};
+					stats.push(bs1w);
+					db.get('wbar', function (err, rep) {
+						var wbar = {wbar: rep};
+						stats.push(wbar);
+						db.get('wbaw', function (err, rep) {
+							var wbaw = {wbaw: rep};
+							stats.push(wbaw);
+							res.json(stats);
+						});
+					});
+				});
+			});
 		});
-    });
+	});
 });
 
 

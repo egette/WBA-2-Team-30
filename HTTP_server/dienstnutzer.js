@@ -302,10 +302,19 @@ app.get('/statistic', jsonParser, function(req, res) {
   var externalRequest = http.request(statpath, function(externalResponse) {
     externalResponse.on('data', function(chunk) {
       var adata = JSON.parse(chunk);
-      var right = adata[0].right;
-      var wrong = adata[1].wrong;
-      console.log('Right: ' + right);
-      console.log('Wrong: ' + wrong);
+      console.log(adata);
+      var ap1r = adata[0].ap1r;
+      var ap1w = adata[1].ap1w;
+      var bs1r = adata[2].bs1r;
+      var bs1w = adata[3].bs1w;
+      var wbar = adata[4].wbar;
+      var wbaw = adata[5].wbaw;
+      console.log('AP1 Right: ' + ap1r);
+      console.log('AP1 Wrong: ' + ap1w);
+      console.log('BS1 Right: ' + bs1r);
+      console.log('BS1 Wrong: ' + bs1w);
+      console.log('WBA Right: ' + wbar);
+      console.log('WBA Wrong: ' + wbaw);
 
       fs.readFile('./statistics.ejs', {
         encoding: 'utf-8'

@@ -26,8 +26,13 @@
         </div>
           <div class="col-md-8 col-xs-12"><img src="Bilder/Block-klein.png" class="img-responsive" alt="Placeholder image">
             <div class="statwrapper centertext">
-              <div class="bar" id="one"><p class="barstat">Richtige Fragen: <%= stat[0].right %></p></div>
-              <div class="bar" id="two"><p class="barstat">Falsche Fragen: <%= stat[1].wrong %></p></div>
+              <div class="bar" id="one"><p class="barstat" id="barstatr">Richtige Fragen:</p></div>
+              <div class="bar" id="two"><p class="barstat" id="barstatw">Falsche Fragen: </p></div>
+              <div class="stbutton">
+                <button type="button" id="ap1">AP1</button>
+                <button type="button" id="bs1">BS1</button>
+                <button type="button" id="wba">WBA</button>
+              </div>
             </div>
           </div>
       </div>
@@ -38,16 +43,60 @@
     </div>
     <script type="text/javascript">
     $(document).ready(function() {
+        var ap1r = <%= stat[0].ap1r %>;
+        var ap1w = <%= stat[1].ap1w %>;
+        var bs1r = <%= stat[2].bs1r %>;
+        var bs1w = <%= stat[3].bs1w %>;
+        var wbar = <%= stat[4].wbar %>;
+        var wbaw = <%= stat[5].wbaw %>;
+
       setTimeout(function(){
-        var right = <%= stat[0].right %>
-        var wrong = <%= stat[1].wrong %>
+        var all = ap1r + ap1w + bs1r + bs1w + wbar + wbaw;
+        var allr = ap1r + bs1r + wbar;
+        var allw = ap1w + bs1w + wbaw;
 
-        var rightpx = (400 / ( (100 / ( right + wrong ) ) * right + (100 / ( right + wrong ) ) * wrong ) ) * (100 / ( right + wrong ) ) * right;
-        var wrongpx = (400 / ( (100 / ( right + wrong ) ) * right + (100 / ( right + wrong ) ) * wrong ) ) * (100 / ( right + wrong ) ) * wrong;
+        var allpxr = (400 / ( (100 / ( allr + allw ) ) * allr + (100 / ( allr + allw ) ) * allw ) ) * (100 / ( allr + allw ) ) * allr;
 
-        $("#one").css("height", rightpx + "px");
-        $("#two").css("height", wrongpx + "px");
+        var allpxw = (400 / ( (100 / ( allr + allw ) ) * allr + (100 / ( allr + allw ) ) * allw ) ) * (100 / ( allr + allw ) ) * allw;
+
+        $("#one").css("height", allpxr + "px");
+        $("#two").css("height", allpxw + "px");
+        $("#barstatr").html('Richtige Fragen: ' + allr);
+        $("#barstatw").html('Falsche Fragen: ' + allw);
       },1000);
+
+      $('#ap1').click(function(){
+        var ap1rpx = (400 / ( (100 / ( ap1r + ap1w ) ) * ap1r + (100 / ( ap1r + ap1w ) ) * ap1w ) ) * (100 / ( ap1r + ap1w ) ) * ap1r;
+
+        var ap1wpx = (400 / ( (100 / ( ap1r + ap1w ) ) * ap1r + (100 / ( ap1r + ap1w ) ) * ap1w ) ) * (100 / ( ap1r + ap1w ) ) * ap1w;
+
+        $("#one").css("height", ap1rpx + "px");
+        $("#two").css("height", ap1wpx + "px");
+        $("#barstatr").html('Richtige Fragen: ' + ap1r);
+        $("#barstatw").html('Falsche Fragen: ' + ap1w);
+      });
+
+      $('#bs1').click(function(){
+        var bs1rpx = (400 / ( (100 / ( bs1r + bs1w ) ) * bs1r + (100 / ( bs1r + bs1w ) ) * bs1w ) ) * (100 / ( bs1r + bs1w ) ) * bs1r;
+
+        var bs1wpx = (400 / ( (100 / ( bs1r + bs1w ) ) * bs1r + (100 / ( bs1r + bs1w ) ) * bs1w ) ) * (100 / ( bs1r + bs1w ) ) * bs1w;
+
+        $("#one").css("height", bs1rpx + "px");
+        $("#two").css("height", bs1wpx + "px");
+        $("#barstatr").html('Richtige Fragen: ' + bs1r);
+        $("#barstatw").html('Falsche Fragen: ' + bs1w);
+      });
+
+      $('#wba').click(function(){
+        var wbarpx = (400 / ( (100 / ( wbar + wbaw ) ) * wbar + (100 / ( wbar + wbaw ) ) * wbaw ) ) * (100 / ( wbar + wbaw ) ) * wbar;
+
+        var wbawpx = (400 / ( (100 / ( wbar + wbaw ) ) * wbar + (100 / ( wbar + wbaw ) ) * wbaw ) ) * (100 / ( wbar + wbaw ) ) * wbaw;
+
+        $("#one").css("height", wbarpx + "px");
+        $("#two").css("height", wbawpx + "px");
+        $("#barstatr").html('Richtige Fragen: ' + wbar);
+        $("#barstatw").html('Falsche Fragen: ' + wbaw);
+      });
     });
     </script>
 	<!-- Include all compiled plugins (below), or include individual files as needed --> 
