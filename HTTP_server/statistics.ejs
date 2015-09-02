@@ -26,6 +26,7 @@
         </div>
           <div class="col-md-8 col-xs-12"><img src="Bilder/Block-klein.png" class="img-responsive" alt="Placeholder image">
             <div class="statwrapper centertext">
+              <h1 id="stath">Alle Fragen</h1>
               <div class="bar" id="one"><p class="barstat" id="barstatr">Richtige Fragen:</p></div>
               <div class="bar" id="two"><p class="barstat" id="barstatw">Falsche Fragen: </p></div>
               <div class="stbutton">
@@ -74,6 +75,7 @@
         $("#two").css("height", ap1wpx + "px");
         $("#barstatr").html('Richtige Fragen: ' + ap1r);
         $("#barstatw").html('Falsche Fragen: ' + ap1w);
+        $("#stath").html('Statistiken AP1');
       });
 
       $('#bs1').click(function(){
@@ -85,9 +87,10 @@
         $("#two").css("height", bs1wpx + "px");
         $("#barstatr").html('Richtige Fragen: ' + bs1r);
         $("#barstatw").html('Falsche Fragen: ' + bs1w);
+        $("#stath").html('Statistiken BS1');
       });
 
-      $('#wba').click(function(){
+      $('#wba').click('.notactive', function(){
         var wbarpx = (400 / ( (100 / ( wbar + wbaw ) ) * wbar + (100 / ( wbar + wbaw ) ) * wbaw ) ) * (100 / ( wbar + wbaw ) ) * wbar;
 
         var wbawpx = (400 / ( (100 / ( wbar + wbaw ) ) * wbar + (100 / ( wbar + wbaw ) ) * wbaw ) ) * (100 / ( wbar + wbaw ) ) * wbaw;
@@ -96,6 +99,7 @@
         $("#two").css("height", wbawpx + "px");
         $("#barstatr").html('Richtige Fragen: ' + wbar);
         $("#barstatw").html('Falsche Fragen: ' + wbaw);
+        $("#stath").html('Statistiken WBA');
       });
     });
     </script>

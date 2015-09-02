@@ -118,16 +118,23 @@ body {
 }
 
 .statwrapper {
+  position: absolute;
   top: 150px;
   height: 400px;
-  width: 400px;
+  width: 70%;
+  left: 50%;
+  transform: translate(-50%);
+  -webkit-transform: translate(-50%);
+  -moz-transform: translate(-50%);
+  -o-transform: translate(-50%);
+  -ms-transform: translate(-50%);
 }
 
 .bar {
-  width: 150px;
+  width: 45%;
   height: 40px;
   position: absolute;
-  bottom: 88px;
+  bottom: 60px;
   transition: height 1s;
   -webkit-transition: height 1s;
   -moz-transition: height 1s;
@@ -140,16 +147,24 @@ body {
 }
 
 #one {
-  left: 40px;
+  left: 0;
   background-color: #8BC34A;
 }
 
 #two {
-  left: 210px;
+  right: 0;
   background-color: #009688;
 }
 
 .stbutton {
 	position: absolute;
-	bottom: 40;
+	bottom: 30;
+}
+
+#stath {
+	margin-top: -90px;
+}
+
+.active {
+	background-color: yellow;
 }
