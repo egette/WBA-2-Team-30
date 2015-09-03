@@ -58,7 +58,7 @@ app.post('/user', function(req, res) {
 		};
 		
 		userVerzeichniss.push(neuerUser);
-		redis.set(allUsers, JSON.stringify(userVerzeichniss));
+		db.set(allUsers, JSON.stringify(userVerzeichniss));
 		res.status(201).json(neuerUser);
     });
  });
