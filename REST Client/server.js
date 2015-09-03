@@ -38,8 +38,9 @@ app.use(function (req, res, next) {
 //Creating a user with ID
 app.post('/user', function(req, res) {
  
-	db.get(allUsers, function (err, rep) { 
-		var userVerzeichniss = JSON.parse(rep);
+	db.get('allUsers', function (err, rep) { 
+		var userVerzeichniss = [];
+		userVerzeichniss.push(JSON.parse(rep));
 		var letzteID = 0;
 		
 		//Suche nach der letzten User ID im Verzeichniss
@@ -54,11 +55,11 @@ app.post('/user', function(req, res) {
 		var neuerUser = {
 			id: neueId,
 			username: req.body.username,
-			password: sha1sum(req.body.password) 
+			password: req.body.password
 		};
 		
 		userVerzeichniss.push(neuerUser);
-		db.set(allUsers, JSON.stringify(userVerzeichniss));
+		db.set('allUsers', JSON.stringify(userVerzeichniss));
 		res.status(201).json(neuerUser);
     });
  });
