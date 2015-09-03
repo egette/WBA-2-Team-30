@@ -30,6 +30,7 @@
               <div class="bar" id="one"><p class="barstat" id="barstatr">Richtige Fragen:</p></div>
               <div class="bar" id="two"><p class="barstat" id="barstatw">Falsche Fragen: </p></div>
               <div class="stbutton">
+                <button type="button" id="allstat" class="allstat">Gesamt</button>
                 <button type="button" id="ap1">AP1</button>
                 <button type="button" id="bs1">BS1</button>
                 <button type="button" id="wba">WBA</button>
@@ -51,10 +52,11 @@
         var wbar = <%= stat[4].wbar %>;
         var wbaw = <%= stat[5].wbaw %>;
 
-      setTimeout(function(){
         var all = ap1r + ap1w + bs1r + bs1w + wbar + wbaw;
         var allr = ap1r + bs1r + wbar;
         var allw = ap1w + bs1w + wbaw;
+
+      setTimeout(function(){
 
         var allpxr = (400 / ( (100 / ( allr + allw ) ) * allr + (100 / ( allr + allw ) ) * allw ) ) * (100 / ( allr + allw ) ) * allr;
 
@@ -64,7 +66,6 @@
         $("#two").css("height", allpxw + "px");
         $("#barstatr").html('Richtige Fragen: ' + allr);
         $("#barstatw").html('Falsche Fragen: ' + allw);
-      },1000);
 
       $('#ap1').click(function(){
         var ap1rpx = (400 / ( (100 / ( ap1r + ap1w ) ) * ap1r + (100 / ( ap1r + ap1w ) ) * ap1w ) ) * (100 / ( ap1r + ap1w ) ) * ap1r;
@@ -76,6 +77,7 @@
         $("#barstatr").html('Richtige Fragen: ' + ap1r);
         $("#barstatw").html('Falsche Fragen: ' + ap1w);
         $("#stath").html('Statistiken AP1');
+        $("#allstat").addClass('active');
       });
 
       $('#bs1').click(function(){
@@ -88,6 +90,7 @@
         $("#barstatr").html('Richtige Fragen: ' + bs1r);
         $("#barstatw").html('Falsche Fragen: ' + bs1w);
         $("#stath").html('Statistiken BS1');
+        $("#allstat").addClass('active');
       });
 
       $('#wba').click('.notactive', function(){
@@ -100,7 +103,18 @@
         $("#barstatr").html('Richtige Fragen: ' + wbar);
         $("#barstatw").html('Falsche Fragen: ' + wbaw);
         $("#stath").html('Statistiken WBA');
+        $("#allstat").addClass('active');
       });
+
+      $('#allstat').click(function(){
+        $("#one").css("height", allr + "px");
+        $("#two").css("height", allw + "px");
+        $("#barstatr").html('Richtige Fragen: ' + allr);
+        $("#barstatw").html('Falsche Fragen: ' + allw);
+        $("#stath").html('Statistiken Gesamt');
+        $("#allstat").removeClass('active');
+      });
+      },1000);
     });
     </script>
 	<!-- Include all compiled plugins (below), or include individual files as needed --> 
