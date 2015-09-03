@@ -4,7 +4,9 @@ var bodyParser = require('body-parser');
 var jsonParser = bodyParser.json();
 var redis = require('redis');
 var db = redis.createClient();
+var jwt    = require('jsonwebtoken'); // used to create, sign, and verify tokens
 var app = express();
+
 
 app.use(bodyParser.json());
 
@@ -33,74 +35,95 @@ app.use(function (req, res, next) {
 	next();
 });
 
-
-//Creating a user with ID as JSON string
+//Creating a user with ID
 app.post('/user', function(req, res) {
-	var newUser = req.body;
-	db.incr('id:user', function(err, rep) {
-		newUser.id = rep;
-		db.set('user:'+newUser.id, JSON.stringify(newUser), function(err, rep) {
-			res.json(newUser);
-		});
-	});
-});
-
-//Getting User by ID
-app.get('/user/:id', function(req, res) {
-	db.get('user:'+req.params.id, function(err, rep) {
-		if(rep) {
-			res.type('json').send(rep);
-		} else {
-			res.status(404).type('text').send('Dieser User ist nicht vorhanden')
+ 
+	db.get(allUsers, function (err, rep) { 
+		var userVerzeichniss = JSON.parse(rep);
+		var letzteID = 0;
+		
+		//Suche nach der letzten User ID im Verzeichniss
+		for (var i in userVerzeichniss) {
+			if (userVerzeichniss[i].id > letzteID){
+				letzteID = parseInt(userVerzeichniss[i].id);
+			}
 		}
-	});
-});
+		
+		var neueId = letzteID + 1;
+		
+		var neuerUser = {
+			id: neueId,
+			username: req.body.username,
+			password: sha1sum(req.body.password) 
+		};
+		
+		userVerzeichniss.push(neuerUser);
+		redis.set(allUsers, JSON.stringify(userVerzeichniss));
+		res.status(201).json(neuerUser);
+    });
+ });
 
-//Updating information of a User
-app.put('/user/:id', function(req, res) {
-	db.exists('user:'+req.params.id, function(err, rep) {
-		if(rep == 1) {
-			var updatedUser = req.body;
-			updatedUser.id = req.params.id;
-			db.set('user:' + req.params.id, JSON.stringify(updatedUser), function(err, rep) {
-				res.json(updatedUser);
-			});
-		} else {
+//Getting User by Name (ID macht keinen Sinn )
+app.get('/user/:name', function(req, res) {
+	var nameUser = req.params.name;
+	
+	db.get(allUsers, function (err, rep) {		
+		var userVerzeichniss = JSON.parse(rep);
+		
+		for (var i in userVerzeichniss) {
+			if (userVerzeichniss[i].username == nameUser) {
+				//Ausgabe des gefundenen Users
+				console.log(userVerzeichniss[i]);
+				return res.status(200).json(userList[i]);
+			} else {
 			res.status(404).type('text').send('Dieser User ist nicht vorhanden');
+			}
 		}
+	});
+});
+
+//Updating information of a User with ID
+app.put('/user/:id', function(req, res) {
+		db.get(allUsers, function (err, rep) {
+		var userVerzeichniss = JSON.parse(rep);
+		
+		for (var i in userVerzeichniss) {
+			if (userVerzeichniss[i].id == req.params.id) {
+								
+				userList[i].username = req.body.username;
+				//Nur falls ein neues Password mitgeschickt wurde, wird ein neues Password übernommen
+				if (req.body.password) userList[i].password = sha1sum(req.body.password);
+				
+				var neueUserdaten = userVerzeichniss[i];
+			} else {
+				res.status(404).type('text').send('Dieser User ist nicht vorhanden');
+			}
+		}
+		db.set(allUsers, JSON.stringify(userVerzeichniss));
+		//Neue User Daten werden zurückgeschickt
+		res.status(200).json(neueUserdaten);
 	});
 });
 
 //Delete User
 app.delete('/user/:id', function(req, res) {
-	db.del('user:'+req.params.id, function(err, rep) {
-		if(rep == 1) {
-			res.status(200).type('text').send('Der User wurde gelöscht');
-		} else {
-			res.status(404).type('text').send('Dieser User ist nicht vorhanden');
-		}
+	db.get(allUsers, function (err, obj) {
+		var userVerzeichniss = JSON.parse(obj);
+		
+		userVerzeichniss = userVerzeichniss.filter(function(del) {
+			return del.id != req.params.id
+		});
+		
+		db.set(allUsers, JSON.stringify(userVerzeichniss));
+		//res.status(204).type.('text').send('Der User mit der ID ' + req.params.id ' wurde geloescht ');
 	});
 });
 
 //Get all users
-app.get('/user', function(req, res) {
-	db.keys('user:*', function(err, rep) {
-		var user = [];
-
-		if(rep.length == 0) {
-			res.json(user);
-			return;
-		}
-		db.mget(rep, function(err, rep) {
-			rep.forEach(function(val) {
-				user.push(JSON.parse(val));
-		});
-
-		user = user.map(function(user) {
-			return {id: user.id, name: user.name};
-		});
-		res.json(user);
-		});
+app.get('/alluser', function(req, res) {
+	db.get(allUsers, function (err, rep) {		
+		var userVerzeichniss = JSON.parse(rep);
+		res.status(200).json(userVerzeichniss);
 	});
 });
 
