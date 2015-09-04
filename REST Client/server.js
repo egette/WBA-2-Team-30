@@ -35,9 +35,39 @@ app.use(function (req, res, next) {
 	next();
 });
 
+app.post('/authenticate', function(req, res) {
+	db.get('allUsers', function (err, rep) {
+		console.log('Die angekommenden Daten' + req.body);
+		var userVerzeichniss = JSON.parse(rep);
+		for (var i in userVerzeichniss) {
+			if (userVerzeichniss[i].username == req.body.username) {
+				if (userVerzeichniss[i].password == req.body.password) {
+					
+					var token = jwt.sign(userVerzeichniss[i], 'secret', {
+						expiresInMinutes: 1440
+					});
+		
+					return res.status(202).json({
+						success: true,
+						message: 'Erfolgreich eingeloggt!',
+						token: token,
+						username: req.body.username
+					});
+					
+				}else{
+					return res.status(403).json({ success: false, message: 'Falsches Passwort.'});
+				}
+			}
+		}
+		res.status(404).json({ success: false, message: 'User leider nicht gefunden. Name falsch?' });
+	});
+ });
+		
 //Creating a user with ID
 app.post('/user', function(req, res) {
  
+	console.log(req.body);
+	
 	db.get('allUsers', function (err, rep) { 
 		var userVerzeichniss = [];
 		userVerzeichniss.push(JSON.parse(rep));
@@ -68,7 +98,7 @@ app.post('/user', function(req, res) {
 app.get('/user/:name', function(req, res) {
 	var nameUser = req.params.name;
 	
-	db.get(allUsers, function (err, rep) {		
+	db.get('allUsers', function (err, rep) {		
 		var userVerzeichniss = JSON.parse(rep);
 		
 		for (var i in userVerzeichniss) {
@@ -85,7 +115,7 @@ app.get('/user/:name', function(req, res) {
 
 //Updating information of a User with ID
 app.put('/user/:id', function(req, res) {
-		db.get(allUsers, function (err, rep) {
+		db.get('allUsers', function (err, rep) {
 		var userVerzeichniss = JSON.parse(rep);
 		
 		for (var i in userVerzeichniss) {
@@ -100,7 +130,7 @@ app.put('/user/:id', function(req, res) {
 				res.status(404).type('text').send('Dieser User ist nicht vorhanden');
 			}
 		}
-		db.set(allUsers, JSON.stringify(userVerzeichniss));
+		db.set('allUsers', JSON.stringify(userVerzeichniss));
 		//Neue User Daten werden zurückgeschickt
 		res.status(200).json(neueUserdaten);
 	});
@@ -108,21 +138,21 @@ app.put('/user/:id', function(req, res) {
 
 //Delete User
 app.delete('/user/:id', function(req, res) {
-	db.get(allUsers, function (err, obj) {
+	db.get('allUsers', function (err, obj) {
 		var userVerzeichniss = JSON.parse(obj);
 		
 		userVerzeichniss = userVerzeichniss.filter(function(del) {
 			return del.id != req.params.id
 		});
 		
-		db.set(allUsers, JSON.stringify(userVerzeichniss));
-		//res.status(204).type.('text').send('Der User mit der ID ' + req.params.id ' wurde geloescht ');
+		db.set('allUsers', JSON.stringify(userVerzeichniss));
+		res.status(204).type('text').send('Der User mit der ID wurde geloescht ' + req.params.id );
 	});
 });
 
 //Get all users
 app.get('/alluser', function(req, res) {
-	db.get(allUsers, function (err, rep) {		
+	db.get('allUsers', function (err, rep) {		
 		var userVerzeichniss = JSON.parse(rep);
 		res.status(200).json(userVerzeichniss);
 	});
@@ -232,43 +262,89 @@ app.get('/quiz/:fach', function(req, res) {
 });
 
 /*Posting statistics on Database*/
-app.post('/statistic', function(req, res) {
-
+app.post('/statistic/:username', function(req, res) {
+	var user = req.params.username;
+	
 	console.log(req.body);
 	console.log('AP1: ' + req.body.AP1);
 	console.log('BS1: ' + req.body.BS1);
 	console.log('WBA: ' + req.body.WBA);
+	
+	var ap1rU = 'ap1r' + user;
+	var ap1wU = 'ap1w' + user;
+	var wbarU = 'wbar' + user;
+	var wbawU = 'wbaw' + user;
+	var bs1rU = 'bs1r' + user;
+	var bs1wU = 'bs1w' + user;
+	
+	db.get(ap1rU, function(err, rep) {
+		if (rep == null){
+			db.set(ap1rU, 0);
+		}
+	}); 
+	
+	db.get(ap1wU, function(err, rep) {
+		if (rep == null){
+			db.set(ap1wU, 0);
+		}
+	});
+	
+	db.get(wbarU, function(err, rep) {
+		if (rep == null){
+			db.set(wbarU, 0);
+		}
+	});
+	
+	db.get(wbawU, function(err, rep) {
+		if (rep == null){
+			db.set(wbawU, 0);
+		}
+	});
+	
+	db.get(bs1rU, function(err, rep) {
+		if (rep == null){
+			db.set(bs1rU, 0);
+		}
+	});
+	
+	db.get(bs1wU, function(err, rep) {
+		if (rep == null){
+			db.set(bs1wU, 0);
+		}
+	});
+	
+	
 
 	if(req.body.AP1 != undefined) {
 		console.log('AP1 ist das Fach');
 		if(req.body.AP1 == 1) {
-			db.incr('ap1r', function(err, rep) {
+			db.incr(ap1rU, function(err, rep) {
 				console.log('Anzahl der richtigen Fragen: ' + rep);
 			});
 		} else {
-			db.incr('ap1w', function(err, rep) {
+			db.incr(ap1wU, function(err, rep) {
 				console.log('Anzahl der richtigen Fragen: ' + rep);
 			});
 		}
 	} else if(req.body.BS1 != undefined) {
 		console.log('BS1 ist das Fach');
 		if(req.body.BS1 == 1) {
-			db.incr('bs1r', function(err, rep) {
+			db.incr(bs1rU, function(err, rep) {
 				console.log('Anzahl der richtigen Fragen: ' + rep);
 			});
 		} else {
-			db.incr('bs1w', function(err, rep) {
+			db.incr(bs1wU, function(err, rep) {
 				console.log('Anzahl der richtigen Fragen: ' + rep);
 			});
 		}
 	} else if(req.body.WBA != undefined) {
 		console.log('WBA ist das Fach');
 		if(req.body.WBA == 1) {
-			db.incr('wbar', function(err, rep) {
+			db.incr(wbarU, function(err, rep) {
 				console.log('Anzahl der richtigen Fragen: ' + rep);
 			});
 		} else {
-			db.incr('wbaw', function(err, rep) {
+			db.incr(wbawU, function(err, rep) {
 				console.log('Anzahl der richtigen Fragen: ' + rep);
 			});
 		}
@@ -278,27 +354,35 @@ app.post('/statistic', function(req, res) {
 });
 
 /*Getting statistics*/
-app.get('/statistic', function(req, res) {
+app.get('/statistic/:username', function(req, res) {
 	console.log('GET auf statistic');
+	var user = req.params.username;
+	
+	var ap1rU = 'ap1r' + user;
+	var ap1wU = 'ap1w' + user;
+	var wbarU = 'wbar' + user;
+	var wbawU = 'wbaw' + user;
+	var bs1rU = 'bs1r' + user;
+	var bs1wU = 'bs1w' + user;
 
 	var stats = [];
 
-	db.get('ap1r', function (err, rep) {
+	db.get(ap1rU, function (err, rep) {
 		var ap1r = {ap1r: rep};
 		stats.push(ap1r);
-		db.get('ap1w', function (err, rep) {
+		db.get(ap1wU, function (err, rep) {
 			var ap1w = {ap1w: rep};
 			stats.push(ap1w);
-			db.get('bs1r', function (err, rep) {
+			db.get(bs1rU, function (err, rep) {
 				var bs1r = {bs1r: rep};
 				stats.push(bs1r);
-				db.get('bs1w', function (err, rep) {
+				db.get(bs1wU, function (err, rep) {
 					var bs1w = {bs1w: rep};
 					stats.push(bs1w);
-					db.get('wbar', function (err, rep) {
+					db.get(wbarU, function (err, rep) {
 						var wbar = {wbar: rep};
 						stats.push(wbar);
-						db.get('wbaw', function (err, rep) {
+						db.get(wbawU, function (err, rep) {
 							var wbaw = {wbaw: rep};
 							stats.push(wbaw);
 							res.json(stats);

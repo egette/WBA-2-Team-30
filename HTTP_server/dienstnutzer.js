@@ -4,6 +4,8 @@ var bodyParser = require('body-parser');
 var jsonParser = bodyParser.json();
 var ejs = require('ejs');
 var fs = require('fs');
+var LocalStorage = require('node-localstorage').LocalStorage;
+localStorage = new LocalStorage('./local');
 
 var app = express();
 
@@ -27,6 +29,29 @@ app.get('/', jsonParser, function(req, res) {
       throw err;
     } else {
       console.log('Connected to Home');
+      var html = ejs.render(filestring, {
+                name: localStorage.getItem("name")
+            });
+
+      res.setHeader('content-type', 'text/html');
+      res.writeHead(200);
+      res.write(html);
+      res.end();
+
+      console.log('Request end');
+
+    } //ende else
+  }); //readFile
+}); //haupt...
+
+app.get('/registrieren', jsonParser, function(req, res) {
+  fs.readFile('./regi.ejs', {
+    encoding: 'utf-8'
+  }, function(err, filestring) {
+    if (err) {
+      throw err;
+    } else {
+      console.log('connectet to regi');
       var html = ejs.render(filestring);
 
       res.setHeader('content-type', 'text/html');
@@ -40,6 +65,79 @@ app.get('/', jsonParser, function(req, res) {
   }); //readFile
 }); //haupt...
 
+app.post('/user', jsonParser, function(req, res) {
+
+  var newUser = req.body;
+  var headers = {
+    'Content-Type': 'application/json',
+  };
+
+  var options = {
+    host: 'localhost',
+    port: 3000,
+    path: '/user',
+    method: 'POST',
+    headers: headers
+  };
+
+  var req = http.request(options, function(res) {
+    res.setEncoding('utf-8');
+
+    console.log('STATUS' + res.statusCode);
+
+    res.on('data', function(chunk) {
+      console.log('BODY: ' + chunk);
+  });
+  });
+
+  req.on('error', function(e) {
+    console.log('problem with request' + e.message);
+  });
+
+  req.write(JSON.stringify(newUser));
+  req.end();
+  res.end();
+});
+
+app.post('/authenticate', jsonParser, function(req, res) {
+
+  var login = req.body;
+  var headers = {
+    'Content-Type': 'application/json',
+  };
+
+  var options = {
+    host: 'localhost',
+    port: 3000,
+    path: '/authenticate',
+    method: 'POST',
+    headers: headers
+  };
+
+  var req = http.request(options, function(res) {
+    res.setEncoding('utf-8');
+
+    console.log('STATUS' + res.statusCode);
+
+    res.on('data', function(chunk) {
+      console.log('BODY: ' + chunk);
+	  var adata = JSON.parse(chunk);
+		if (adata.success == true){
+			localStorage.setItem("token", adata.token);
+			localStorage.setItem("name", adata.username);
+		};
+    });
+  });
+
+  req.on('error', function(e) {
+    console.log('problem with request' + e.message);
+  });
+
+  req.write(JSON.stringify(login));
+  req.end();
+  res.end();
+});
+
 // Fach für das Quiz auswählen
 app.get('/quiz', jsonParser, function(req, res) {
   fs.readFile('./quiz.ejs', {
@@ -49,14 +147,16 @@ app.get('/quiz', jsonParser, function(req, res) {
       throw err;
     } else {
 
-      console.log('Connected to quiz');
-      var html = ejs.render(filestring);
-      res.setHeader('content-type', 'text/html');
-      res.writeHead(200);
-      res.write(html);
-      res.end();
+		console.log('Connected to quiz');
+		var html = ejs.render(filestring, {
+			name: localStorage.getItem("name")
+		});
+		res.setHeader('content-type', 'text/html');
+		res.writeHead(200);
+		res.write(html);
+		res.end();
 
-      console.log('Request end');
+		console.log('Request end');
     }
   });
 });
@@ -97,7 +197,9 @@ app.get('/quiz/:fach', jsonParser, function(req, res) {
           } else {
 
             console.log('Connected to keinefragen');
-            var html = ejs.render(filestring);
+			var html = ejs.render(filestring, {
+                name: localStorage.getItem("name")
+            });
             res.setHeader('content-type', 'text/html');
             res.writeHead(200);
             res.write(html);
@@ -251,18 +353,19 @@ app.post('/question', jsonParser, function(req, res) {
   res.end();
 });
 
-//Posting statistics (not functional as of now)
+//Posting statistics 
 app.post('/statistic',jsonParser, function(req, res) {
   console.log('Post on statistic');
   var newStat = req.body;
   var headers = {
     'Content-Type': 'application/json',
   };
+  var username = localStorage.getItem("name");
 
   var options = {
     host: 'localhost',
     port: 3000,
-    path: '/statistic',
+    path: '/statistic/' + username,
     method: 'POST',
     headers: headers
   };
@@ -288,11 +391,12 @@ app.post('/statistic',jsonParser, function(req, res) {
 
 app.get('/statistic', jsonParser, function(req, res) {
   console.log('GET auf statistic');
-
+  var username = localStorage.getItem("name");
+	
   var statpath = {
     host: 'localhost',
     port: 3000,
-    path: '/statistic',
+    path: '/statistic/' + username,
     method: 'GET',
     headers: {
       accept: 'application/json'
@@ -328,7 +432,9 @@ app.get('/statistic', jsonParser, function(req, res) {
             stat: adata
           };
 
-          var html = ejs.render(filestring, daten);
+           var html = ejs.render(filestring, daten, {
+				name: localStorage.getItem("name")
+            });
 
           res.setHeader('content-type', 'text/html');
           res.writeHead(200);

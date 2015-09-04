@@ -30,10 +30,8 @@
 	          	</div>
 			</div>
 		<div class="col-md-8 col-xs-12"><img src="../Bilder/Block-klein.png" class="img-responsive" alt="Placeholder image">
-		<form id="login" class="centertext quizfont3">	
-		Username : <%= name %>
-			<h1>Login</h1>
-			
+		<form id="regi" class="centertext quizfont3">	
+			<h1>Registrieren</h1>
 			<label for="frage">Geben Sie ihren Usernamen ein:</label> <br>
 			<input type="text" id="username" maxlength="5000"><br>
 	 
@@ -42,9 +40,7 @@
 			
 				
 			<button type="reset">Eingaben zuruecksetzen</button><br><br>
-			<button type="submit">Einloggen</button>
-			
-			<a href="http://localhost:3001/registrieren"> Noch nicht registriert? </a>
+			<button type="submit">Registrieren</button>
 
         </form>			
 	</div>
@@ -58,7 +54,7 @@
 	<script src="../js/jquery-1.11.2.min.js"></script>
 		<script type="text/javascript">
 			$(document).ready(function(){
-						var frm = $('#login');
+						var frm = $('#regi');
 
 						frm.submit(function (ev) {
 						var usrn = $('#username').val();
@@ -71,17 +67,14 @@
 						
 						alert('Ihre Anfrage wird verarbeitet');
 							$.ajax({
-								
 								type: 'POST',
-								host: 'localhost',
-								port: 3000,
-								url: '/authenticate',
+								url: '/user',
 								data: JSON.stringify(data),
 								contentType: 'application/json'
 								}).done(function(){
-								alert('Erfolgreich eingeloggt');
+								alert('User wurde hinzugefügt.');
 								}).fail(function(e){
-								alert('Sie konnten nicht eingeloggt werden :( ');
+								alert('User konnte nicht hinzugefügt werden.');
 							});
 							ev.preventDefault();
 						});
