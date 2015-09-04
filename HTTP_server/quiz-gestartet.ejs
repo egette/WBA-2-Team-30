@@ -30,6 +30,8 @@
 			</div>
 		<div class="col-md-8 col-xs-12"><img src="../Bilder/Block-klein.png" class="img-responsive" alt="Placeholder image">
 		<form id="quiz" class="centertext">
+		<div id="eingeloggt" class="quizfont3" > Username : <%= name %>
+		<a class = "logout" href="http://localhost:3001/logout"> Ausloggen</a></div>
 			<h2 class="quizfont2">Frage <%= questions[0].id %></h2>
 				<fieldset>
 					<%= questions[0].question %> <br>
@@ -93,6 +95,15 @@
 			}
 		});
 	});
+	
+	var name = '<%= name %>';			
+			if(name != ''){
+				$("#eingeloggt").addClass('an');
+				$("#nichteingeloggt").addClass('aus');
+			}else{
+				$("#eingeloggt").addClass('aus');
+				$("#nichteingeloggt").addClass('an');
+			};
 	</script>
 	<!-- Include all compiled plugins (below), or include individual files as needed --> 
 	<script src="../js/bootstrap.js"></script>

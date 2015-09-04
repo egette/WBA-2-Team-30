@@ -17,6 +17,24 @@ body {
 	font-size: 450%;
 	color: #FFFFFF;
 }
+.logout {
+	color: black;
+	text-decoration: none;
+	float: right;
+}
+.logout:hover {
+	color: black;
+	text-decoration: none;
+	float: right;
+}
+.regi {
+	color: black;
+	text-decoration: none;
+}
+.regi:hover {
+	color: #336d73;
+	text-decoration: none;
+}
 
 .neuefrage {
 	font-family: "Comic Zine OT";
@@ -81,6 +99,12 @@ body {
 .img-responsive {
 	position: relative;
 } 
+
+.arial {
+	font-family: "Arial";
+	color: black;
+	text-decoration: none;
+}
 
 .quizfont {
 	font-family: "Comic Zine OT";
@@ -178,4 +202,12 @@ body {
 .active {
 	opacity: 1;
 	cursor: pointer;
+}
+
+.aus{
+	opacity: 0;
+}
+
+.an{
+	opacity: 1;
 }

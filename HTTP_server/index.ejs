@@ -1,7 +1,7 @@
 
 <html>
 <head>
-	<title>StudiQuiz - Neue Fragen</title>
+	<title>StudiQuiz - Startseite</title>
 	<meta charset="utf-8">
 	<meta http-equiv="X-UA-Compatible" content="IE=edge">
 	<meta name="viewport" content="width=device-width, initial-scale=1">
@@ -31,11 +31,12 @@
 			</div>
 		<div class="col-md-8 col-xs-12"><img src="../Bilder/Block-klein.png" class="img-responsive" alt="Placeholder image">
 		<form id="login" class="centertext quizfont3">	
-		Username : <%= name %>
-			<h1>Login</h1>
+		<div id="eingeloggt" > Username : <%= name %>
+		<a class = "logout" href="http://localhost:3001/logout"> Ausloggen</a></div>
+			<div id="nichteingeloggt" ><h1>Login</h1>
 			
 			<label for="frage">Geben Sie ihren Usernamen ein:</label> <br>
-			<input type="text" id="username" maxlength="5000"><br>
+			<input type="text" id="username" maxlength="5000" class="arial"><br>
 	 
 			<label for="antwort1">Geben Sie ihr Passwort ein:</label>  <br>
 			<input type="password" id="pw" maxlength="5000"><br>
@@ -44,7 +45,7 @@
 			<button type="reset">Eingaben zuruecksetzen</button><br><br>
 			<button type="submit">Einloggen</button>
 			
-			<a href="http://localhost:3001/registrieren"> Noch nicht registriert? </a>
+			<a class = "regi" href="http://localhost:3001/registrieren"> Noch nicht registriert? </a></div>
 
         </form>			
 	</div>
@@ -57,7 +58,13 @@
 	<!-- jQuery (necessary for Bootstrap's JavaScript plugins) --> 
 	<script src="../js/jquery-1.11.2.min.js"></script>
 		<script type="text/javascript">
+			$( document ).ajaxComplete(function() {
+				location.reload();
+			});
 			$(document).ready(function(){
+			
+			var name = '<%= name %>';  
+			
 						var frm = $('#login');
 
 						frm.submit(function (ev) {
@@ -85,6 +92,15 @@
 							});
 							ev.preventDefault();
 						});
+						
+			var name = '<%= name %>';			
+			if(name != ''){
+				$("#eingeloggt").addClass('an');
+				$("#nichteingeloggt").addClass('aus');
+			}else{
+				$("#eingeloggt").addClass('aus');
+				$("#nichteingeloggt").addClass('an');
+			};
 			
 			});
 		</script>

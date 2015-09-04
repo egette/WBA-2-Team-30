@@ -44,6 +44,31 @@ app.get('/', jsonParser, function(req, res) {
   }); //readFile
 }); //haupt...
 
+app.get('/logout', jsonParser, function(req, res) {
+  fs.readFile('./index.ejs', {
+    encoding: 'utf-8'
+  }, function(err, filestring) {
+    if (err) {
+      throw err;
+    } else {
+      console.log('Connected to Home');
+	  localStorage.removeItem("token");
+	  localStorage.removeItem("name");
+      var html = ejs.render(filestring, {
+                name: localStorage.getItem("name")
+            });
+
+      res.setHeader('content-type', 'text/html');
+      res.writeHead(200);
+      res.write(html);
+      res.end();
+
+      console.log('Request end');
+
+    } //ende else
+  }); //readFile
+}); //haupt...
+
 app.get('/registrieren', jsonParser, function(req, res) {
   fs.readFile('./regi.ejs', {
     encoding: 'utf-8'
@@ -273,8 +298,10 @@ app.get('/quiz/:fach', jsonParser, function(req, res) {
                 console.log(adata2);
 
                 var daten = {
-                  questions: adata2
+                  questions: adata2,
+				  name: localStorage.getItem("name") 
                 };
+				
                 var html = ejs.render(filestring, daten);
 
                 res.setHeader('content-type', 'text/html');
@@ -308,7 +335,9 @@ app.get('/newquestion', jsonParser, function(req, res) {
     } else {
 
       console.log('Connected to newquestion');
-      var html = ejs.render(filestring);
+	  var html = ejs.render(filestring, {
+                name: localStorage.getItem("name")
+      });
       res.setHeader('content-type', 'text/html');
       res.writeHead(200);
       res.write(html);
@@ -429,12 +458,11 @@ app.get('/statistic', jsonParser, function(req, res) {
           console.log('Connected to statistic');
 
           var daten = {
-            stat: adata
+            stat: adata,
+			name: localStorage.getItem("name")
           };
 
-           var html = ejs.render(filestring, daten, {
-				name: localStorage.getItem("name")
-            });
+           var html = ejs.render(filestring, daten);
 
           res.setHeader('content-type', 'text/html');
           res.writeHead(200);

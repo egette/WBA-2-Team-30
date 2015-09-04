@@ -30,7 +30,10 @@
 	          	</div>
 			</div>
 		<div class="col-md-8 col-xs-12"><img src="../Bilder/Block-klein.png" class="img-responsive" alt="Placeholder image">
-		<form id="newquestion" class="centertext quizfont3">	
+		<div id="nichteingeloggt" class="centertext quizfont2"> Bitte loggen Sie sich ein um eine neue Frage zu erstellen!</div>
+ 		<div id="eingeloggt"><form id="newquestion " class="centertext quizfont3">
+		<div id="eingeloggt" > Username : <%= name %>
+		<a class = "logout" href="http://localhost:3001/logout"> Ausloggen</a></div>		
 		<h1>Neue Frage erstellen</h1>
         <label for="frage">Bitte geben Sie eine Frage ein:</label> <br>
         <input type="text" id="frage" maxlength="5000"><br>
@@ -57,7 +60,7 @@
         <button type="reset">Eingaben zuruecksetzen</button><br><br>
         <button type="submit">Eingaben absenden</button>
 
-        </form>			
+        </form></div>			
 	</div>
 		</div>
 			<div class="row">
@@ -103,6 +106,14 @@
 						});
 			
 			});
+			var name = '<%= name %>';			
+			if(name != ''){
+				$("#eingeloggt").addClass('an');
+				$("#nichteingeloggt").addClass('aus');
+			}else{
+				$("#eingeloggt").addClass('aus');
+				$("#nichteingeloggt").addClass('an');
+			};
 		</script>
 	<!-- Include all compiled plugins (below), or include individual files as needed --> 
 	<script src="../js/bootstrap.js"></script>

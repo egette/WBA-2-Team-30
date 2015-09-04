@@ -25,8 +25,11 @@
           </div>
         </div>
           <div class="col-md-8 col-xs-12"><img src="Bilder/Block-klein.png" class="img-responsive" alt="Placeholder image">
-            <div class="statwrapper centertext">
-              <h1 id="stath">Alle Fragen</h1>
+		  <div id="nichteingeloggt" class="centertext quizfont2"> Bitte loggen Sie sich ein um ihre Statistik zu sehen! </div>
+            <div class="statwrapper centertext" id="eingeloggt">
+			<div id="eingeloggt" class="quizfont3" > Username : <%= name %>
+		<a class = "logout" href="http://localhost:3001/logout"> Ausloggen</a></div>
+              <h1 id="stath" class="quizfont2">Alle Fragen</h1>
               <div class="bar" id="one"><p class="barstat" id="barstatr">Richtige Fragen:</p></div>
               <div class="bar" id="two"><p class="barstat" id="barstatw">Falsche Fragen: </p></div>
               <div class="stbutton">
@@ -35,7 +38,9 @@
                 <button type="button" id="bs1">BS1</button>
                 <button type="button" id="wba">WBA</button>
               </div>
+			  
             </div>
+			
           </div>
       </div>
       <div class="row">
@@ -116,6 +121,15 @@
       });
       },1000);
     });
+	
+		var name = '<%= name %>';			
+			if(name != ''){
+				$("#eingeloggt").addClass('an');
+				$("#nichteingeloggt").addClass('aus');
+			}else{
+				$("#eingeloggt").addClass('aus');
+				$("#nichteingeloggt").addClass('an');
+			};
     </script>
 	<!-- Include all compiled plugins (below), or include individual files as needed --> 
 	<script src="js/bootstrap.js"></script>
