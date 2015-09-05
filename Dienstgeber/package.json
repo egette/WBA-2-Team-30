@@ -4,8 +4,8 @@
   "description": "Ein Webservice für Studenten um Fragen zu Fächern zu stellen und zu beantworten",
   "main": "app.js",
   "dependencies": {
-    "body-parser": "^1.13.1",
-    "express": "^4.13.0",
+    "body-parser": "^1.13.3",
+    "express": "^4.13.3",
     "fs": "0.0.2",
     "http": "0.0.0",
     "jsonwebtoken": "^5.0.5",

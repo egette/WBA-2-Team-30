@@ -9,11 +9,12 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
-    "body-parser": "^1.13.1",
-    "ejs": "^2.3.2",
-    "express": "^4.13.0",
+    "body-parser": "^1.13.3",
+    "ejs": "^2.3.3",
+    "express": "^4.13.3",
     "fs": "0.0.2",
     "http": "0.0.0",
+    "json-parser": "^1.0.0",
     "node": "0.0.0",
     "node-localstorage": "^0.5.2"
   }
