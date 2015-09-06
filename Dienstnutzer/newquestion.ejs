@@ -31,7 +31,7 @@
 			</div>
 		<div class="col-md-8 col-xs-12"><img src="../Bilder/Block-klein.png" class="img-responsive" alt="Placeholder image">
 		<div id="nichteingeloggt" class="centertext quizfont2"> Bitte loggen Sie sich ein um eine neue Frage zu erstellen!</div>
- 		<div id="eingeloggt"><form id="newquestion " class="centertext quizfont3">
+ 		<div id="eingeloggt"><form id="newquestion" class="centertext quizfont3">
 		<div id="eingeloggt" > Username : <%= name %>
 		<a class = "logout" href="http://localhost:3001/logout"> Ausloggen</a></div>		
 		<h1>Neue Frage erstellen</h1>
@@ -51,7 +51,7 @@
         <input type="text" id="antwort4" maxlength="5000"><br>
 
         <select id="fach">
-    		<option>Fach ausw&aumlhlen</option>
+    		<option>Fach ausw&aumlhlen </option>
     		<option>AP1</option>
     		<option>BS1</option>
         	<option>WBA</option>
@@ -83,13 +83,13 @@
 						var answer = "a";
 						var fach = $('#fach option:selected').text();
 						var data = { 
-						question : question,
-						a : a,
-						b : b,
-						c : c,
-						d : d,
-						"answer": answer,
-						"fach": fach
+							question : question,
+							a : a,
+							b : b,
+							c : c,
+							d : d,
+							"answer": answer,
+							"fach": fach
 						};
 						alert('Ihre Anfrage wird verarbeitet');
 							$.ajax({
