@@ -436,12 +436,36 @@ app.get('/statistic', jsonParser, function(req, res) {
     externalResponse.on('data', function(chunk) {
       var adata = JSON.parse(chunk);
       console.log(adata);
-      var ap1r = adata[0].ap1r;
-      var ap1w = adata[1].ap1w;
-      var bs1r = adata[2].bs1r;
-      var bs1w = adata[3].bs1w;
-      var wbar = adata[4].wbar;
-      var wbaw = adata[5].wbaw;
+	  if (adata[0].ap1r != null ){
+		  var ap1r = adata[0].ap1r;
+	  }else {
+		  adata[0].ap1r = 0; 
+	  };
+	  if (adata[1].ap1w != null){
+		  var ap1w = adata[1].ap1w;
+	  }else {
+		  adata[1].ap1w = 0;
+	  };
+	  if (adata[2].bs1r != null){
+		  var bs1r = adata[2].bs1r;
+	  }else {
+		  adata[2].bs1r = 0;
+	  };
+	  if (adata[3].bs1w != null){
+		  var bs1w = adata[3].bs1w;
+	  }else {
+		  adata[3].bs1w = 0;
+	  };
+	  if (adata[4].wbar != null){
+		  var wbar = adata[4].wbar;
+	  }else {
+		  adata[4].wbar = 0;
+	  };
+	  if (adata[5].wbaw != null){
+		  var wbaw = adata[5].wbaw;
+	  }else {
+		  adata[5].wbaw = 0;
+	  };
       console.log('AP1 Right: ' + ap1r);
       console.log('AP1 Wrong: ' + ap1w);
       console.log('BS1 Right: ' + bs1r);

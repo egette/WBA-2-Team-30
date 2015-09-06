@@ -27,9 +27,11 @@
           <div class="col-md-8 col-xs-12"><img src="Bilder/Block-klein.png" class="img-responsive" alt="Placeholder image">
 		  <div id="nichteingeloggt" class="centertext quizfont2"> Bitte loggen Sie sich ein um ihre Statistik zu sehen! </div>
             <div class="statwrapper centertext" id="eingeloggt">
-			<div id="eingeloggt" class="quizfont3" > Username : <%= name %>
-		<a class = "logout" href="http://localhost:3001/logout"> Ausloggen</a></div>
+			
               <h1 id="stath" class="quizfont2">Alle Fragen</h1>
+			  <div id="eingeloggt" class="quizfont3" > Username : <%= name %>
+		<a class = "logout" href="http://localhost:3001/logout"> Ausloggen</a></div>
+		<div class="bugfix">
               <div class="bar" id="one"><p class="barstat" id="barstatr">Richtige Fragen:</p></div>
               <div class="bar" id="two"><p class="barstat" id="barstatw">Falsche Fragen: </p></div>
               <div class="stbutton">
@@ -38,7 +40,7 @@
                 <button type="button" id="bs1">BS1</button>
                 <button type="button" id="wba">WBA</button>
               </div>
-			  
+			  </div>
             </div>
 			
           </div>
@@ -50,12 +52,22 @@
     </div>
     <script type="text/javascript">
     $(document).ready(function() {
-        var ap1r = <%= stat[0].ap1r %>;
-        var ap1w = <%= stat[1].ap1w %>;
-        var bs1r = <%= stat[2].bs1r %>;
-        var bs1w = <%= stat[3].bs1w %>;
-        var wbar = <%= stat[4].wbar %>;
-        var wbaw = <%= stat[5].wbaw %>;
+			var name = '<%= name %>';			
+			if(name != ''){
+				$("#eingeloggt").addClass('an');
+				$("#nichteingeloggt").addClass('aus');
+			}else{
+				$("#eingeloggt").addClass('aus');
+				$("#nichteingeloggt").addClass('an');
+			};
+			
+			var ap1r = <%= stat[0].ap1r %>;
+			var ap1w = <%= stat[1].ap1w %>;
+			var bs1r = <%= stat[2].bs1r %>;
+			var bs1w = <%= stat[3].bs1w %>;
+			var wbar = <%= stat[4].wbar %>;
+			var wbaw = <%= stat[5].wbaw %>;
+		
 
         var all = ap1r + ap1w + bs1r + bs1w + wbar + wbaw;
         var allr = ap1r + bs1r + wbar;
@@ -63,9 +75,9 @@
 
       setTimeout(function(){
 
-        var allpxr = (400 / ( (100 / ( allr + allw ) ) * allr + (100 / ( allr + allw ) ) * allw ) ) * (100 / ( allr + allw ) ) * allr;
+        var allpxr = (300 / ( (100 / ( allr + allw ) ) * allr + (100 / ( allr + allw ) ) * allw ) ) * (100 / ( allr + allw ) ) * allr;
 
-        var allpxw = (400 / ( (100 / ( allr + allw ) ) * allr + (100 / ( allr + allw ) ) * allw ) ) * (100 / ( allr + allw ) ) * allw;
+        var allpxw = (300 / ( (100 / ( allr + allw ) ) * allr + (100 / ( allr + allw ) ) * allw ) ) * (100 / ( allr + allw ) ) * allw;
 
         $("#one").css("height", allpxr + "px");
         $("#two").css("height", allpxw + "px");
@@ -73,9 +85,9 @@
         $("#barstatw").html('Falsche Fragen: ' + allw);
 
       $('#ap1').click(function(){
-        var ap1rpx = (400 / ( (100 / ( ap1r + ap1w ) ) * ap1r + (100 / ( ap1r + ap1w ) ) * ap1w ) ) * (100 / ( ap1r + ap1w ) ) * ap1r;
+        var ap1rpx = (300 / ( (100 / ( ap1r + ap1w ) ) * ap1r + (100 / ( ap1r + ap1w ) ) * ap1w ) ) * (100 / ( ap1r + ap1w ) ) * ap1r;
 
-        var ap1wpx = (400 / ( (100 / ( ap1r + ap1w ) ) * ap1r + (100 / ( ap1r + ap1w ) ) * ap1w ) ) * (100 / ( ap1r + ap1w ) ) * ap1w;
+        var ap1wpx = (300 / ( (100 / ( ap1r + ap1w ) ) * ap1r + (100 / ( ap1r + ap1w ) ) * ap1w ) ) * (100 / ( ap1r + ap1w ) ) * ap1w;
 
         $("#one").css("height", ap1rpx + "px");
         $("#two").css("height", ap1wpx + "px");
@@ -86,9 +98,9 @@
       });
 
       $('#bs1').click(function(){
-        var bs1rpx = (400 / ( (100 / ( bs1r + bs1w ) ) * bs1r + (100 / ( bs1r + bs1w ) ) * bs1w ) ) * (100 / ( bs1r + bs1w ) ) * bs1r;
+        var bs1rpx = (300 / ( (100 / ( bs1r + bs1w ) ) * bs1r + (100 / ( bs1r + bs1w ) ) * bs1w ) ) * (100 / ( bs1r + bs1w ) ) * bs1r;
 
-        var bs1wpx = (400 / ( (100 / ( bs1r + bs1w ) ) * bs1r + (100 / ( bs1r + bs1w ) ) * bs1w ) ) * (100 / ( bs1r + bs1w ) ) * bs1w;
+        var bs1wpx = (300 / ( (100 / ( bs1r + bs1w ) ) * bs1r + (100 / ( bs1r + bs1w ) ) * bs1w ) ) * (100 / ( bs1r + bs1w ) ) * bs1w;
 
         $("#one").css("height", bs1rpx + "px");
         $("#two").css("height", bs1wpx + "px");
@@ -99,9 +111,9 @@
       });
 
       $('#wba').click('.notactive', function(){
-        var wbarpx = (400 / ( (100 / ( wbar + wbaw ) ) * wbar + (100 / ( wbar + wbaw ) ) * wbaw ) ) * (100 / ( wbar + wbaw ) ) * wbar;
+        var wbarpx = (300 / ( (100 / ( wbar + wbaw ) ) * wbar + (100 / ( wbar + wbaw ) ) * wbaw ) ) * (100 / ( wbar + wbaw ) ) * wbar;
 
-        var wbawpx = (400 / ( (100 / ( wbar + wbaw ) ) * wbar + (100 / ( wbar + wbaw ) ) * wbaw ) ) * (100 / ( wbar + wbaw ) ) * wbaw;
+        var wbawpx = (300 / ( (100 / ( wbar + wbaw ) ) * wbar + (100 / ( wbar + wbaw ) ) * wbaw ) ) * (100 / ( wbar + wbaw ) ) * wbaw;
 
         $("#one").css("height", wbarpx + "px");
         $("#two").css("height", wbawpx + "px");
@@ -112,8 +124,8 @@
       });
 
       $('#allstat').click(function(){
-        $("#one").css("height", allr + "px");
-        $("#two").css("height", allw + "px");
+        $("#one").css("height", allpxr + "px");
+        $("#two").css("height", allpxw + "px");
         $("#barstatr").html('Richtige Fragen: ' + allr);
         $("#barstatw").html('Falsche Fragen: ' + allw);
         $("#stath").html('Statistiken Gesamt');
@@ -122,14 +134,7 @@
       },1000);
     });
 	
-		var name = '<%= name %>';			
-			if(name != ''){
-				$("#eingeloggt").addClass('an');
-				$("#nichteingeloggt").addClass('aus');
-			}else{
-				$("#eingeloggt").addClass('aus');
-				$("#nichteingeloggt").addClass('an');
-			};
+
     </script>
 	<!-- Include all compiled plugins (below), or include individual files as needed --> 
 	<script src="js/bootstrap.js"></script>

@@ -270,85 +270,73 @@ app.post('/statistic/:username', function(req, res) {
 	console.log('BS1: ' + req.body.BS1);
 	console.log('WBA: ' + req.body.WBA);
 	
-	var ap1rU = 'ap1r' + user;
-	var ap1wU = 'ap1w' + user;
-	var wbarU = 'wbar' + user;
-	var wbawU = 'wbaw' + user;
-	var bs1rU = 'bs1r' + user;
-	var bs1wU = 'bs1w' + user;
-	
-	db.get(ap1rU, function(err, rep) {
-		if (rep == null){
-			db.set(ap1rU, 0);
+	if (user != ''){
+		var ap1rU = 'ap1r' + user;
+		var ap1wU = 'ap1w' + user;
+		var wbarU = 'wbar' + user;
+		var wbawU = 'wbaw' + user;
+		var bs1rU = 'bs1r' + user;
+		var bs1wU = 'bs1w' + user;
+		
+		var datenkontrolle = [];
+		datenkontrolle.push(ap1rU);
+		datenkontrolle.push(ap1wU);
+		datenkontrolle.push(wbarU);
+		datenkontrolle.push(wbawU);
+		datenkontrolle.push(bs1rU);
+		datenkontrolle.push(bs1wU);
+		
+		
+		for(var i = 0; i < datenkontrolle.length; i++){
+		
+			db.get(datenkontrolle[i], function(err, rep) {
+				console.log('Daten der Statistik von  ' + user);
+				console.log(datenkontrolle[i]);
+				console.log(rep);
+				if (rep == null){
+					db.set(datenkontrolle[i], 0);
+				}
+			}); 
+			
 		}
-	}); 
-	
-	db.get(ap1wU, function(err, rep) {
-		if (rep == null){
-			db.set(ap1wU, 0);
-		}
-	});
-	
-	db.get(wbarU, function(err, rep) {
-		if (rep == null){
-			db.set(wbarU, 0);
-		}
-	});
-	
-	db.get(wbawU, function(err, rep) {
-		if (rep == null){
-			db.set(wbawU, 0);
-		}
-	});
-	
-	db.get(bs1rU, function(err, rep) {
-		if (rep == null){
-			db.set(bs1rU, 0);
-		}
-	});
-	
-	db.get(bs1wU, function(err, rep) {
-		if (rep == null){
-			db.set(bs1wU, 0);
-		}
-	});
-	
 	
 
-	if(req.body.AP1 != undefined) {
-		console.log('AP1 ist das Fach');
-		if(req.body.AP1 == 1) {
-			db.incr(ap1rU, function(err, rep) {
-				console.log('Anzahl der richtigen Fragen: ' + rep);
-			});
-		} else {
-			db.incr(ap1wU, function(err, rep) {
-				console.log('Anzahl der richtigen Fragen: ' + rep);
-			});
-		}
-	} else if(req.body.BS1 != undefined) {
-		console.log('BS1 ist das Fach');
-		if(req.body.BS1 == 1) {
-			db.incr(bs1rU, function(err, rep) {
-				console.log('Anzahl der richtigen Fragen: ' + rep);
-			});
-		} else {
-			db.incr(bs1wU, function(err, rep) {
-				console.log('Anzahl der richtigen Fragen: ' + rep);
-			});
-		}
-	} else if(req.body.WBA != undefined) {
-		console.log('WBA ist das Fach');
-		if(req.body.WBA == 1) {
-			db.incr(wbarU, function(err, rep) {
-				console.log('Anzahl der richtigen Fragen: ' + rep);
-			});
-		} else {
-			db.incr(wbawU, function(err, rep) {
-				console.log('Anzahl der richtigen Fragen: ' + rep);
-			});
+		if(req.body.AP1 != undefined) {
+			console.log('AP1 ist das Fach');
+			if(req.body.AP1 == 1) {
+				db.incr(ap1rU, function(err, rep) {
+					console.log('Anzahl der richtigen Fragen: ' + rep);
+				});
+			} else {
+				db.incr(ap1wU, function(err, rep) {
+					console.log('Anzahl der richtigen Fragen: ' + rep);
+				});
+			}
+		} else if(req.body.BS1 != undefined) {
+			console.log('BS1 ist das Fach');
+			if(req.body.BS1 == 1) {
+				db.incr(bs1rU, function(err, rep) {
+					console.log('Anzahl der richtigen Fragen: ' + rep);
+				});
+			} else {
+				db.incr(bs1wU, function(err, rep) {
+					console.log('Anzahl der richtigen Fragen: ' + rep);
+				});
+			}
+		} else if(req.body.WBA != undefined) {
+			console.log('WBA ist das Fach');
+			if(req.body.WBA == 1) {
+				db.incr(wbarU, function(err, rep) {
+					console.log('Anzahl der richtigen Fragen: ' + rep);
+				});
+			} else {
+				db.incr(wbawU, function(err, rep) {
+					console.log('Anzahl der richtigen Fragen: ' + rep);
+				});
+			}
 		}
 	}
+
 	res.writeHead(200);
 	res.end();
 });
