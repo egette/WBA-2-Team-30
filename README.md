@@ -7,8 +7,17 @@ Aufgabe 1 & 2 & 3 sind im Ordner APP/app.js
 -------------------------
 
 Projekt StudiQuiz:
+
 1.Redis starten
+
 2.Dienstgeber/server.js mit node starten
+
 3.Dienstnutzer/dienstnutzer.js mit node starten.
-4. ???
-5.Profit!
+
+4.Im Browser auf http:localhost:3001/ gehen. 
+
+5.???
+
+6.Profit!
+
+
