@@ -105,7 +105,7 @@ app.get('/user/:name', function(req, res) {
 			if (userVerzeichniss[i].username == nameUser) {
 				//Ausgabe des gefundenen Users
 				console.log(userVerzeichniss[i]);
-				return res.status(200).json(userList[i]);
+				return res.status(200).json(userVerzeichniss[i]);
 			} else {
 			res.status(404).type('text').send('Dieser User ist nicht vorhanden');
 			}
@@ -121,9 +121,9 @@ app.put('/user/:id', function(req, res) {
 		for (var i in userVerzeichniss) {
 			if (userVerzeichniss[i].id == req.params.id) {
 								
-				userList[i].username = req.body.username;
+				userVerzeichniss[i].username = req.body.username;
 				//Nur falls ein neues Password mitgeschickt wurde, wird ein neues Password übernommen
-				if (req.body.password) userList[i].password = sha1sum(req.body.password);
+				if (req.body.password) userVerzeichniss[i].password = req.body.password;
 				
 				var neueUserdaten = userVerzeichniss[i];
 			} else {
@@ -165,7 +165,7 @@ app.post('/question', function(req, res) {
 	db.incr('id:question', function(err, rep) {
 		newQuestion.id = rep;
 		db.set('question:'+newQuestion.id, JSON.stringify(newQuestion), function(err, rep) {
-			res.json(newQuestion);
+			res.status(200).json(newQuestion);
 			console.log('New question added succedfully');
 		});
 	});
@@ -175,7 +175,7 @@ app.post('/question', function(req, res) {
 app.get('/question/:id', function(req, res) {
 	db.get('question:'+req.params.id, function(err, adata2) {
 		if(adata2) {
-			res.type('json').send(adata2);
+			res.status(200).type('json').send(adata2);
 		} else {
 			res.status(404).type('text').send('Diese Frage ist nicht vorhanden')
 		}
@@ -189,7 +189,7 @@ app.put('/question/:id', function(req, res) {
 			var updatedQuestion = req.body;
 			updatedQuestion.id = req.params.id;
 			db.set('question:' + req.params.id, JSON.stringify(updatedQuestion), function(err, rep) {
-				res.json(updatedQuestion);
+				res.status(200).json(updatedQuestion);
 			});
 		} else {
 			res.status(404).type('text').send('Diese Frage ist nicht vorhanden');
@@ -217,6 +217,7 @@ app.get('/question', function(req, res) {
 			res.json(question);
 			return;
 		}
+		
 		db.mget(rep, function(err, rep) {
 			rep.forEach(function(val) {
 				question.push(JSON.parse(val));
@@ -227,7 +228,7 @@ app.get('/question', function(req, res) {
 		}); 
 		var data = {questions: question};
 		
-		res.json(data);
+		res.status(200).json(data);
 		console.log('All questions sent');
 		});
 	});
@@ -256,7 +257,7 @@ app.get('/quiz/:fach', function(req, res) {
 		}); 
 		var data = {quizID: question};
 		
-		res.json(data);
+		res.status(200).json(data);
 		});
 	});
 });

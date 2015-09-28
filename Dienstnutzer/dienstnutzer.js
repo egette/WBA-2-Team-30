@@ -116,7 +116,7 @@ app.post('/user', jsonParser, function(req, res) {
   });
 
   req.on('error', function(e) {
-    console.log('problem with request' + e.message);
+    console.log('problem with request  :   ' + e.message);
   });
 
   req.write(JSON.stringify(newUser));
@@ -139,7 +139,7 @@ app.post('/authenticate', jsonParser, function(req, res) {
     headers: headers
   };
 
-  var req = http.request(options, function(res) {
+  var exReq = http.request(options, function(res) {
     res.setEncoding('utf-8');
 
     console.log('STATUS' + res.statusCode);
@@ -154,12 +154,12 @@ app.post('/authenticate', jsonParser, function(req, res) {
     });
   });
 
-  req.on('error', function(e) {
-    console.log('problem with request' + e.message);
+  exReq.on('error', function(e) {
+    console.log('problem with request :   ' + e.message);
   });
 
-  req.write(JSON.stringify(login));
-  req.end();
+  exReq.write(JSON.stringify(login));
+  exReq.end();
   res.end();
 });
 
@@ -189,21 +189,21 @@ app.get('/quiz', jsonParser, function(req, res) {
 //Quiz mit ausgeweahltem Fach starten
 app.get('/quiz/:fach', jsonParser, function(req, res) {
 
-  var fach = '/quiz/' + req.params.fach;
-  var random_entry;
-  var path_question_id;
+  var fach_path = '/quiz/' + req.params.fach; // der Path zu den IDs der Fragen des bestimmten Faches
+  var random_entry; // zufälliger Eintrag einer ID aus den IDs der Fragen des bestimmten Faches
+  var path_question_id; // Path zu der Frage mit der ID aus random_entry
   var options_question;
 
   var options_fach_id = {
     host: 'localhost',
     port: 3000,
-    path: fach,
+    path: fach_path,
     method: 'GET',
     headers: {
       accept: 'application/json'
     }
   }
-
+    // erste externe Anfrage an den Dienstgeber um die Ids der Fragen zu dem gesuchten Fach zu finden
   var externalRequest = http.request(options_fach_id, function(externalResponse) {
     console.log('Verbunden und sucht die QuestionIDs zum Fach');
     externalResponse.on('data', function(chunk) {
@@ -212,7 +212,8 @@ app.get('/quiz/:fach', jsonParser, function(req, res) {
       adata.quizID = adata.quizID.filter(function(x) {
         return x !== null
       });
-      if (adata.quizID.length == 0) {
+	  
+      if (adata.quizID.length == 0) { // Falls die Länge 0 ist, dann gibt es noch keine Frage zu dem Fach
         console.log('Keine Fragen vorhanden');
         fs.readFile('./keinefragen.ejs', {
           encoding: 'utf-8'
@@ -235,7 +236,7 @@ app.get('/quiz/:fach', jsonParser, function(req, res) {
         });
         externalRequest.end();
 
-      } else {
+      } else {               // die Länge ist größer 0
         fs.readFile('./quiz-gestartet.ejs', {
           encoding: 'utf-8'
         }, function(err, filestring) {
@@ -284,7 +285,7 @@ app.get('/quiz/:fach', jsonParser, function(req, res) {
                 }
 
                 shuffle(random_ans);
-
+					// einfache Schleife um die Position der richtigen Antwort zu finden
                 for (var i = 0; i < random_ans.length; i++) {
                   if (richtige_ans == random_ans[i]) {
                     richtige_ans = i;
@@ -292,9 +293,9 @@ app.get('/quiz/:fach', jsonParser, function(req, res) {
                 };
 
 
-                adata2[0].answer = richtige_ans;
+                adata2[0].answer = richtige_ans; // die Position der richtigen Antwort wird in adata2 gespeichtert.
 
-                adata2[0].random_ans = random_ans;
+                adata2[0].random_ans = random_ans; // das geshufflte Array mit den Antworten wird wieder in adata2 gespeichert
                 console.log(adata2);
 
                 var daten = {
